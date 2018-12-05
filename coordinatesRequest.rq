@@ -1,0 +1,29 @@
+select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?latitudeNS ?longitudeDegrees ?longitudeMinutes ?longitudeEW where 
+{
+	?country a dbo:Country.
+        ?country dbo:flag ?flag.
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+
+	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+
+	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
+	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
+	 
+	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
+	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
+	FILTER NOT EXISTS {?capital a dbo:Person}
+
+        # GPS Coordinates
+        ?country dbp:latd ?latitudeDegrees.
+        ?country dbp:latm ?latitudeMinutes.
+        ?country dbp:latns ?latitudeNS. # North - South
+
+        ?country dbp:longd ?longitudeDegrees.
+        ?country dbp:longm ?longitudeMinutes.
+        ?country dbp:longew ?longitudeEW. # East - West
+}
+order by ?capital
