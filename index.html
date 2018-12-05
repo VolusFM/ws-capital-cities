@@ -6,14 +6,22 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css" />
+		<script src="autocomplete.js"></script>
 	</head>
 	<body>
 			<div class="container-fluid">
-				<form class="row navbar navbar-dark bg-dark">
+				<form class="row navbar navbar-dark bg-dark"  autocomplete="off">
 					<h1 class="col navbar-brand">CAPITALS SEARCH ENGINE</h1>
-					<input type="text" class="col-3" placeholder="Entrez une capitale ou un pays" />
+					<div class="col-3">
+						<div id="autocomplete" class="autocomplete">
+						<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="Une capitale ou un pays" value="http://dbpedia.org/resource/" />
+						</div>
+					</div>
 					<button class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
 				</form>
+				<div class="row">
+				</div>
 				<div class="row jumbotron">
 					<h2 class="col display-1" style="text-align: center;" id="nom">Paris</h2>
 				</div>
@@ -149,27 +157,33 @@
 			<div id="acteur"></div>
 	</body>
 	<script type="text/javascript">
-		var query = encodeURIComponent(
-		'SELECT DISTINCT ?nom ?photo ?description '+
-		'WHERE { '+
-		'?film a dbpedia-owl:Film ;'+
-		          'dbpedia-owl:starring ?acteur .'+
-		'?acteur dbpedia-owl:abstract ?description ;'+
-		            'rdfs:label ?nom ;'+
-		            'dbpedia-owl:thumbnail ?photo '+
-		'FILTER langMatches(lang(?description), "fr") '+
-		'FILTER langMatches(lang(?nom), "fr") '+
-		'} LIMIT 5');
-		//var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ query +'&format=json';
-		var url = "http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+distinct+%3FConcept+where+%7B%5B%5D+a+%3FConcept%7D+LIMIT+100&format=json&CXML_redir_for_subjs=121&CXML_redir_for_hrefs=&timeout=30000&debug=on&run=+Run+Query+";
+		var query = encodeURIComponent('select distinct ?capital where '+
+			'{'+
+			'?country a dbo:Country.'+
+			'?country dbo:flag ?flag.'+
+			'{'+
+			 ' {?country dbo:capital ?capital}'+
+			  'UNION'+
+			  '{?country dbp:capital ?capital}'+
+			'}'+
+			'?country <http://purl.org/linguistics/gold/hypernym> ?type.'+
+			'FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || '+
+			'?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)'+
+			'FILTER NOT EXISTS {?country dbo:dissolutionYear ?capitalear}'+
+			'FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}'+
+			'FILTER NOT EXISTS {?capital a dbo:Person}'+
+			'}'+
+			'order by ?capital');
+		var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ query +'&format=json';
+		console.log(url);
 		$.getJSON(url+"&callback=?", function(resultats) {
-			console.log(resultats);
-			  $(resultats.results.bindings).each(function(i) {
-			        $('#acteur').append("<strong>" + resultats.results.bindings[i].nom.value + "</strong>");
-			        $('#acteur').append('<br />');
-			        $('#acteur').append("<img src='" + resultats.results.bindings[i].photo.value + "' />");
-			        $('#acteur').append('<p>' + resultats.results.bindings[i].description.value + '</p>');    
-			  });
+			console.log(resultats.results.bindings);
+			var countries = [];
+			resultats.results.bindings.forEach(function(element) {
+				countries.push(element.capital.value);
+			});
+			console.log(countries);
+			autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), countries);
 		});
 	</script>
 </html>
