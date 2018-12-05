@@ -1,0 +1,20 @@
+# Attempt to get countries first, then capitals
+
+select (COUNT(distinct ?city) as ?count)
+#select distinct ?city ?country
+where {	
+	?country a dbo:Country.
+	?country dbo:flag ?flag.
+	# Remove non existing countries
+	FILTER NOT EXISTS { ?country dbo:dissolutionDate ?dDate }
+	FILTER NOT EXISTS { ?country dbo:dissolutionYear ?dYear }
+	FILTER NOT EXISTS { ?city a dbo:Person }
+	# Get capital
+	{
+		{ ?country dbo:capital ?city }
+		UNION
+		{ ?country dbp:capital ?city }
+	}
+}
+#order by asc(?country)
+
