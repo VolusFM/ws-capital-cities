@@ -8,7 +8,7 @@ select distinct ?capital ?popDemonymString where
 		{?country dbp:capital ?capital}
 	}
 
-	FILTER(contains(str(?capital), %CAPITAL_URL%)))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 
 	# Population Demonym
 	?capital dbp:populationDemonym ?popDemonym.
