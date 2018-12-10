@@ -13,14 +13,11 @@ select distinct ?capital ?labelS ?labelC1 ?labelC2 where
 	?country rdfs:label ?labelS. 
 	?capital rdfs:label ?labelC1. 
 	?capital rdfs:label ?labelC2. 
-
-	#FILTER(str(?y) = "http://dbpedia.org/resource/Algiers"))
         
-        # Example URL
+	# Example URL
 	FILTER(contains(str(?capital), %CAPITAL_URL%))
 	FILTER(lang(?labelS) = 'en')
 	FILTER(lang(?labelC1) = 'en')
 	FILTER(lang(?labelC2) = ?code)
 }
-order by ?y
-limit 1
+LIMIT 1
