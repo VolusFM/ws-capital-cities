@@ -1,6 +1,5 @@
-select distinct ?capital str(?motto) where 
+select distinct ?capitalName ?mottoString where 
 {
-
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
 	?capital rdfs:label ?capitalName
@@ -9,8 +8,9 @@ select distinct ?capital str(?motto) where
 		UNION
 		{?country dbp:capital ?capital}
 	}
+	?capital foaf:name ?capitalName.
 
-	FILTER(contains(str(?capital), %CAPITAL_URL%))
+	FILTER(str(?capital) = %CAPITAL_URL%)
 
 	# Motto
 	{
@@ -18,5 +18,6 @@ select distinct ?capital str(?motto) where
 		UNION
 		{?capital dbo:motto ?motto.}
 	}
+	BIND(str(?motto) AS ?mottoString)
 	FILTER(!contains(str(?motto),"()"))
 }
