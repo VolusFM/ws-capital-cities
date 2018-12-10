@@ -1,19 +1,17 @@
 select distinct ?capitalName xsd:integer(?popTotal) where 
 {
-        #TODO: might need to bind return value to an actual field
+	#TODO: might need to bind return value to an actual field
 	?country a dbo:Country.
-        ?country dbo:flag ?flag.
+	?country dbo:flag ?flag.
 	{
 		{?country dbo:capital ?capital}
 		UNION
 		{?country dbp:capital ?capital}
 	}
 	?capital foaf:name ?capitalName.
-	
 
-        FILTER(contains(str(?capital), %CAPITAL_URL%))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 
 	# Total Population
 	?capital dbo:populationTotal ?popTotal.
 }
-order by ?capital
