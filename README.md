@@ -1,6 +1,11 @@
 # ws-capital-cities
 
 #Améliorations
+## Page d'accueil
+### Carte cliquable des capitales
+
+## Bouton suggestion (random)
+
 ## Autocompletion
 ### SPARQL : pas d'url
 ### JS : faire un peu de trie
