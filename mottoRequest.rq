@@ -1,0 +1,22 @@
+select distinct ?capital str(?motto) where 
+{
+
+	?country a dbo:Country.
+	?country dbo:flag ?flag.
+	?capital rdfs:label ?capitalName
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
+
+	# Motto
+	{
+		{?capital dbp:cityMotto ?motto.}
+		UNION
+		{?capital dbo:motto ?motto.}
+	}
+	FILTER(!contains(str(?motto),"()"))
+}
