@@ -11,7 +11,7 @@ select distinct ?capitalName xsd:integer(?popTotal) where
 	?capital foaf:name ?capitalName.
 	
         # Example URL
-        FILTER(contains(str(?capital), "http://dbpedia.org/resource/Paris"))
+        FILTER(contains(str(?capital), %CAPITAL_URL%)))
 
 	# Total Population
 	?capital dbo:populationTotal ?popTotal.

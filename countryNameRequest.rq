@@ -1,23 +1,23 @@
-select distinct ?y ?labelS ?labelC1 ?labelC2 where 
+select distinct ?capital ?labelS ?labelC1 ?labelC2 where 
 {
 	{
-		{?x dbo:capital ?y}
+		{?country dbo:capital ?capital}
 		UNION
-		{?x dbp:capital ?y}
+		{?country dbp:capital ?capital}
 	}
-	?x a dbo:Country.
+	?country a dbo:Country.
 
-	?x dbo:language ?lang.
+	?country dbo:language ?lang.
 	?lang dbo:iso6391Code ?code.
 
-	?x rdfs:label ?labelS. 
-	?y rdfs:label ?labelC1. 
-	?y rdfs:label ?labelC2. 
+	?country rdfs:label ?labelS. 
+	?capital rdfs:label ?labelC1. 
+	?capital rdfs:label ?labelC2. 
 
 	#FILTER(str(?y) = "http://dbpedia.org/resource/Algiers"))
         
-# Example URL
-	FILTER(contains(str(?y), "http://dbpedia.org/resource/Algiers"))
+        # Example URL
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 	FILTER(lang(?labelS) = 'en')
 	FILTER(lang(?labelC1) = 'en')
 	FILTER(lang(?labelC2) = ?code)

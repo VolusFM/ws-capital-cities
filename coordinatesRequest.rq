@@ -10,7 +10,7 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?lon
 	}
 
 	
-	FILTER(contains(str(?capital), "http://dbpedia.org/resource/Paris"))
+	FILTER(contains(str(?capital), %CAPITAL_URL%)))
 
         # GPS Coordinates
         ?country dbp:latd ?latitudeDegrees.

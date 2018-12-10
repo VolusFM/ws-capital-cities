@@ -8,16 +8,7 @@ select distinct ?capital ?popDemonymString where
 		{?country dbp:capital ?capital}
 	}
 
-	?country <http://purl.org/linguistics/gold/hypernym> ?type.
-
-	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
-	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
-	 
-	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
-	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
-	FILTER NOT EXISTS {?capital a dbo:Person}
-
-	FILTER(contains(str(?capital), "http://dbpedia.org/resource/Paris"))
+	FILTER(contains(str(?capital), %CAPITAL_URL%)))
 
 	# Population Demonym
 	?capital dbp:populationDemonym ?popDemonym.
