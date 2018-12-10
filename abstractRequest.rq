@@ -1,0 +1,19 @@
+select distinct ?capitalName str(?abstract) where 
+{
+        #TODO: might need to bind string to an actual field
+        ?country a dbo:Country.
+        ?country dbo:flag ?flag.
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+	?capital foaf:name ?capitalName.
+
+        # Example URL
+        FILTER(contains(str(?capital), "http://dbpedia.org/resource/London"))
+        FILTER(lang(?abstract) = 'en')
+
+	?capital dbo:abstract ?abstract.
+}
+order by ?capital
