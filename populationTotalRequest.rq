@@ -1,6 +1,5 @@
-select distinct ?capitalName xsd:integer(?popTotal) xsd:integer(?popYear) where 
+select distinct ?capitalName ?popTotalInt ?popYearInt where 
 {
-	#TODO: might need to bind return value to an actual field
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
 	{
@@ -10,9 +9,11 @@ select distinct ?capitalName xsd:integer(?popTotal) xsd:integer(?popYear) where
 	}
 	?capital foaf:name ?capitalName.
 
-	FILTER(contains(str(?capital), %CAPITAL_URL%))
+	FILTER(str(?capital) = %CAPITAL_URL%)
 
 	# Total Population
 	?capital dbo:populationTotal ?popTotal.
+	BIND(xsd:integer(?popTotal) AS ?popTotalInt)
 	OPTIONAL {?capital dbp:popYear ?popYear.}
+	BIND(xsd:integer(?popYear) AS ?popYearInt)
 }
