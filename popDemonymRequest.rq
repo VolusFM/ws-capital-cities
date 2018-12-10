@@ -1,4 +1,4 @@
-select distinct ?capital ?popDemonym where 
+select distinct ?capital ?popDemonymString where 
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -17,7 +17,13 @@ select distinct ?capital ?popDemonym where
 	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
 	FILTER NOT EXISTS {?capital a dbo:Person}
 
+	FILTER(contains(str(?capital), "http://dbpedia.org/resource/Paris"))
+
 	# Population Demonym
 	?capital dbp:populationDemonym ?popDemonym.
+        BIND(str(?popDemonym) as ?popDemonymString)
+	# Remove URLs
+        FILTER (!contains(?popDemonymString, "http"))
 }
 order by ?capital
+LIMIT 1
