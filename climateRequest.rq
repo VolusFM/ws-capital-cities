@@ -1,0 +1,23 @@
+select distinct ?capital xsd:double(?yearHighC) xsd:double(?yearRecordHighC) xsd:double(?yearMeanC)xsd:double(?yearLowC) xsd:double(?yearRecordLowC) xsd:double(?yearPrecipitationDays) xsd:double(?yearPrecipitationMm) xsd:double(?yearSun) where 
+{
+        #TODO: might need to bind strings to actual fields
+        ?country a dbo:Country.
+        ?country dbo:flag ?flag.
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+	
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
+
+        # Climate
+        OPTIONAL{?capital dbp:yearHighC ?yearHighC.}
+        OPTIONAL{?capital dbp:yearRecordHighC ?yearRecordHighC.}
+        OPTIONAL{?capital dbp:yearMeanC ?yearMeanC.}
+        OPTIONAL{?capital dbp:yearLowC ?yearLowC.}
+        OPTIONAL{?capital dbp:yearRecordLowC ?yearRecordLowC.}
+        OPTIONAL{?capital dbp:yearPrecipitationDays ?yearPrecipitationDays.}
+        OPTIONAL{?capital dbp:yearPrecipitationMm ?yearPrecipitationMm.}
+        OPTIONAL{?capital dbp:yearSun ?yearSun.}
+}
