@@ -12,3 +12,13 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function readTextFile(filename, callback) {
+    $.get(filename, function(data) {
+        callback(data);
+    }, 'text');
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
