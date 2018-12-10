@@ -1,4 +1,5 @@
-select distinct ?capitalName ?region where
+#A region can be a district, division, county, etc...
+select distinct ?capitalName ?region ?typeRegion where
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -23,8 +24,11 @@ select distinct ?capitalName ?region where
 		UNION
 		{ ?capital dbo:isPartOf ?region }
 		?region <http://purl.org/linguistics/gold/hypernym> ?typeRegion.
-		FILTER (?typeRegion = dbr:Regions || ?typeRegion = dbr:Province || ?typeRegion = dbr:Provinces || ?typeRegion = dbr:Communities || ?typeRegion = dbr:Units
-			|| ?typeRegion = dbr:Governorate || ?typeRegion = dbr:Area || ?typeRegion = dbr:Division || ?typeRegion = dbr:Units)
+		FILTER (?typeRegion = dbr:Area || ?typeRegion = dbr:Communities
+			|| ?typeRegion = dbr:Counties || ?typeRegion = dbr:Department || ?typeRegion = dbr:Division || ?typeRegion = dbr:Divisions
+			|| ?typeRegion = dbr:District || ?typeRegion = dbr:Districts || ?typeRegion = dbr:Governorate || ?typeRegion = dbr:Governorates
+			|| ?typeRegion = dbr:Oblast || ?typeRegion = dbr:Province || ?typeRegion = dbr:Provinces || ?typeRegion = dbr:Regions || ?typeRegion = dbr:Units
+			|| ?typeRegion = dbr:Zones )
 	}
 
 }
