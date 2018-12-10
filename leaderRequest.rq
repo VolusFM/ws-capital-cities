@@ -1,18 +1,18 @@
-select distinct ?capital str(?leaderName) str(?name) where 
+select distinct ?capital ?leaderNameString ?nameString where 
 {
-	
-      {
-        {
-          {?capital dbo:leaderName ?leaderName}
-         UNION
-          {?capital dbp:leaderName ?leaderName}
-        }
-         UNION
-        {?capital dbo:mayor ?leaderName}
-     }
-        
-    OPTIONAL{?leaderName foaf:name ?name}
+	{
+		{
+			{?capital dbo:leaderName ?leaderName}
+			UNION
+			{?capital dbp:leaderName ?leaderName}
+		}
+		UNION
+		{?capital dbo:mayor ?leaderName}
+	}
 
+	OPTIONAL{?leaderName foaf:name ?name}
+        BIND(str(?leaderName) as ?leaderNameString)
+        BIND(str(?name) as ?nameString)
 
 	FILTER(str(?capital) = %CAPITAL_URL%)
 	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
