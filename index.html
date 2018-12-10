@@ -16,7 +16,7 @@
 					<h1 class="col navbar-brand">CAPITALS SEARCH ENGINE</h1>
 					<div class="col-3">
 						<div id="autocomplete" class="autocomplete">
-							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="Une capitale ou un pays" value="http://dbpedia.org/resource/" />
+							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="Une capitale ou un pays" value="" />
 						</div>
 					</div>
 					<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
@@ -158,44 +158,36 @@
 			<div id="acteur"></div>
 	</body>
 	<script type="text/javascript">
-		var query = encodeURIComponent('select distinct ?capital where '+
-			'{'+
-			'?country a dbo:Country.'+
-			'?country dbo:flag ?flag.'+
-			'{'+
-			 ' {?country dbo:capital ?capital}'+
-			  'UNION'+
-			  '{?country dbp:capital ?capital}'+
-			'}'+
-			'?country <http://purl.org/linguistics/gold/hypernym> ?type.'+
-			'FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || '+
-			'?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)'+
-			'FILTER NOT EXISTS {?country dbo:dissolutionYear ?capitalear}'+
-			'FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}'+
-			'FILTER NOT EXISTS {?capital a dbo:Person}'+
-			'}'+
-			'order by ?capital');
-		var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ query +'&format=json';
 		var capitals = [];
-		$.getJSON(url+"&callback=?", function(resultats) {
-			resultats.results.bindings.forEach(function(element) {
-				capitals.push(element.capital.value);
+		var capitalUrls = [];
+
+		readTextFile("capitalCitiesRequest.rq", function(query) {
+			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
+			$.getJSON(url+"&callback=?", function(resultats) {
+				console.log(resultats.results.bindings);
+				resultats.results.bindings.forEach(function(element) {
+					capitals.push(element.capitalName.value);
+					capitalUrls.push(element.capital.value);
+				});
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals);
+
+				var capital = getUrlParameter('capitalUrl');
+				console.log(capital);
+
+				if (capital !== undefined && capital !== null && capitals.indexOf(capital) >= 0) {
+					
+				}
 			});
-			autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals);
-
-			var capital = getUrlParameter('capital');
-			console.log(capital);
-
-			if (capital !== undefined && capital !== null && capitals.indexOf(capital) >= 0) {
-				
-			}
 		});
 
 
 		$('#bouton_recherche').click(function() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
-			var newUrl = url + '?capital=' + capital;
+			var index = capitals.indexOf(capital);
+			var capitalUrl = capitalUrls[index];
+
+			var newUrl = url + '?capitalUrl=' + capitalUrl;
 			window.location = newUrl;
 		});
 	</script>
