@@ -15,6 +15,8 @@ select distinct ?y ?labelS ?labelC1 ?labelC2 where
 	?y rdfs:label ?labelC2. 
 
 	#FILTER(str(?y) = "http://dbpedia.org/resource/Algiers"))
+        
+# Example URL
 	FILTER(contains(str(?y), "http://dbpedia.org/resource/Algiers"))
 	FILTER(lang(?labelS) = 'en')
 	FILTER(lang(?labelC1) = 'en')
