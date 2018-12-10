@@ -1,4 +1,4 @@
-select distinct ?capitalName xsd:integer(?popTotal) where 
+select distinct ?capitalName xsd:integer(?popTotal) xsd:integer(?popYear) where 
 {
 	#TODO: might need to bind return value to an actual field
 	?country a dbo:Country.
@@ -14,4 +14,5 @@ select distinct ?capitalName xsd:integer(?popTotal) where
 
 	# Total Population
 	?capital dbo:populationTotal ?popTotal.
+	OPTIONAL {?capital dbp:popYear ?popYear.}
 }
