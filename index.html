@@ -167,7 +167,7 @@
 					capitals.push(element.capitalName.value);
 					capitalUrls.push(element.capital.value);
 				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals);
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
 
 				var capital = getUrlParameter('capitalUrl');
 				console.log(capital);
@@ -199,7 +199,9 @@
 			});
 		}
 
-		$('#bouton_recherche').click(function() {
+		$('#bouton_recherche').click(rechercher);
+
+		function rechercher() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
 			var index = capitals.indexOf(capital);
@@ -207,6 +209,7 @@
 
 			var newUrl = url + '?capitalUrl=' + capitalUrl;
 			window.location = newUrl;
-		});
+		};
+
 	</script>
 </html>
