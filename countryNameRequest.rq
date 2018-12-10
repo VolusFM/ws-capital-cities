@@ -14,7 +14,6 @@ select distinct ?capital ?labelS ?labelC1 ?labelC2 where
 	?capital rdfs:label ?labelC1. 
 	?capital rdfs:label ?labelC2. 
         
-	# Example URL
 	FILTER(contains(str(?capital), %CAPITAL_URL%))
 	FILTER(lang(?labelS) = 'en')
 	FILTER(lang(?labelC1) = 'en')

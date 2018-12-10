@@ -1,6 +1,5 @@
-select distinct ?capital xsd:double(?yearHighC) xsd:double(?yearRecordHighC) xsd:double(?yearMeanC)xsd:double(?yearLowC) xsd:double(?yearRecordLowC) xsd:double(?yearPrecipitationDays) xsd:double(?yearPrecipitationMm) xsd:double(?yearSun) where 
+select distinct ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDouble ?yearLowCDouble ?yearRecordLowCDouble ?yearPrecipitationDaysDouble ?yearPrecipitationMmDouble ?yearSunDouble where 
 {
-        #TODO: might need to bind strings to actual fields
         ?country a dbo:Country.
         ?country dbo:flag ?flag.
 	{
@@ -9,15 +8,25 @@ select distinct ?capital xsd:double(?yearHighC) xsd:double(?yearRecordHighC) xsd
 		{?country dbp:capital ?capital}
 	}
 	
-	FILTER(contains(str(?capital), %CAPITAL_URL%))
+        FILTER(str(?capital) = %CAPITAL_URL%)
+	# FILTER(str(?capital) = "http://dbpedia.org/resource/Canberra")
+        # FIXME: for some reason this gives Kathmandu with correct values on an IF machine        
 
         # Climate
         OPTIONAL{?capital dbp:yearHighC ?yearHighC.}
+	BIND(xsd:double(?yearHighC) as ?yearHighCDouble) 
         OPTIONAL{?capital dbp:yearRecordHighC ?yearRecordHighC.}
+	BIND(xsd:double(?yearRecordHighC) as ?yearRecordHighCDouble) 
         OPTIONAL{?capital dbp:yearMeanC ?yearMeanC.}
+	BIND(xsd:double(?yearMeanC) as ?yearMeanCDouble) 
         OPTIONAL{?capital dbp:yearLowC ?yearLowC.}
+	BIND(xsd:double(?yearLowC) as ?yearLowCDouble) 
         OPTIONAL{?capital dbp:yearRecordLowC ?yearRecordLowC.}
+	BIND(xsd:double(?yearRecordLowC) as ?yearRecordLowCDouble) 
         OPTIONAL{?capital dbp:yearPrecipitationDays ?yearPrecipitationDays.}
+	BIND(xsd:double(?yearPrecipitationDays) as ?yearPrecipitationDaysDouble) 
         OPTIONAL{?capital dbp:yearPrecipitationMm ?yearPrecipitationMm.}
+	BIND(xsd:double(?yearPrecipitationMm) as ?yearPrecipitationMmDouble) 
         OPTIONAL{?capital dbp:yearSun ?yearSun.}
+	BIND(xsd:double(?yearSun) as ?yearSunDouble) 
 }
