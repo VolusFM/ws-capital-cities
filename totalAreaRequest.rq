@@ -12,7 +12,7 @@ select distinct ?capitalName xsd:double(?area) where
 	?capital foaf:name ?capitalName.
 
         # Example URL
-        FILTER(contains(str(?capital), %CAPITAL_URL%)))
+        FILTER(contains(str(?capital), %CAPITAL_URL%))
 
 	# Total Area in square meters
 	?capital dboPop:areaTotal ?area.

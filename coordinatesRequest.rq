@@ -10,7 +10,7 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?lon
 	}
 
 	
-	FILTER(contains(str(?capital), %CAPITAL_URL%)))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 
         # GPS Coordinates
         ?country dbp:latd ?latitudeDegrees.
