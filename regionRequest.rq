@@ -1,0 +1,31 @@
+select distinct ?capitalName ?region where
+{
+	?country a dbo:Country.
+        ?country dbo:flag ?flag.
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+	?capital foaf:name ?capitalName.
+	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+
+	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom ||
+	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
+
+	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
+	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
+	FILTER NOT EXISTS {?capital a dbo:Person}
+
+	# Region
+	OPTIONAL{
+		{ ?capital dbo:region ?region }
+		UNION
+		{ ?capital dbo:isPartOf ?region }
+		?region <http://purl.org/linguistics/gold/hypernym> ?typeRegion.
+		FILTER (?typeRegion = dbr:Regions || ?typeRegion = dbr:Province || ?typeRegion = dbr:Provinces || ?typeRegion = dbr:Communities || ?typeRegion = dbr:Units
+			|| ?typeRegion = dbr:Governorate || ?typeRegion = dbr:Area || ?typeRegion = dbr:Division || ?typeRegion = dbr:Units)
+	}
+
+}
+order by ?capital
