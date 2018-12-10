@@ -1,26 +1,24 @@
 select distinct ?y ?labelS ?labelC1 ?labelC2 where 
 {
+	{
+		{?x dbo:capital ?y}
+		UNION
+		{?x dbp:capital ?y}
+	}
+	?x a dbo:Country.
 
-{
-  {?x dbo:capital ?y}
-  UNION
-  {?x dbp:capital ?y}
-}
-?x a dbo:Country.
+	?x dbo:language ?lang.
+	?lang dbo:iso6391Code ?code.
 
-?x dbo:language ?lang.
-?lang dbo:iso6391Code ?code.
+	?x rdfs:label ?labelS. 
+	?y rdfs:label ?labelC1. 
+	?y rdfs:label ?labelC2. 
 
-?x rdfs:label ?labelS. 
-?y rdfs:label ?labelC1. 
-?y rdfs:label ?labelC2. 
-
-#FILTER(str(?y) = "http://dbpedia.org/resource/Algiers"))
-FILTER(contains(str(?y),"http://dbpedia.org/resource/Algiers"))
-FILTER(lang(?labelS) = 'en')
-FILTER(lang(?labelC1) = 'en')
-FILTER(lang(?labelC2) = ?code)
-
+	#FILTER(str(?y) = "http://dbpedia.org/resource/Algiers"))
+	FILTER(contains(str(?y), "http://dbpedia.org/resource/Algiers"))
+	FILTER(lang(?labelS) = 'en')
+	FILTER(lang(?labelC1) = 'en')
+	FILTER(lang(?labelC2) = ?code)
 }
 order by ?y
 limit 1
