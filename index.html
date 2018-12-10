@@ -8,18 +8,19 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/style.css" />
 		<script src="js/autocomplete.js"></script>
+		<script src="js/util.js"></script>
 	</head>
 	<body>
 			<div class="container-fluid">
-				<form class="row navbar navbar-dark bg-dark"  autocomplete="off">
+				<div class="row navbar navbar-dark bg-dark">
 					<h1 class="col navbar-brand">CAPITALS SEARCH ENGINE</h1>
 					<div class="col-3">
 						<div id="autocomplete" class="autocomplete">
 							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="Une capitale ou un pays" value="http://dbpedia.org/resource/" />
 						</div>
 					</div>
-					<button class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
-				</form>
+					<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+				</div>
 				<div class="row">
 				</div>
 				<div class="row jumbotron">
@@ -175,15 +176,27 @@
 			'}'+
 			'order by ?capital');
 		var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ query +'&format=json';
-		console.log(url);
+		var capitals = [];
 		$.getJSON(url+"&callback=?", function(resultats) {
-			console.log(resultats.results.bindings);
-			var countries = [];
 			resultats.results.bindings.forEach(function(element) {
-				countries.push(element.capital.value);
+				capitals.push(element.capital.value);
 			});
-			console.log(countries);
-			autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), countries);
+			autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals);
+
+			var capital = getUrlParameter('capital');
+			console.log(capital);
+
+			if (capital !== undefined && capital !== null && capitals.indexOf(capital) >= 0) {
+				
+			}
+		});
+
+
+		$('#bouton_recherche').click(function() {
+			var url = window.location.href.split('?')[0];
+			var capital = $('#recherche').val();
+			var newUrl = url + '?capital=' + capital;
+			window.location = newUrl;
 		});
 	</script>
 </html>
