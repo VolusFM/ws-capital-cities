@@ -1,20 +1,19 @@
 select distinct ?capital ?popDemonymString where 
 {
 	?country a dbo:Country.
-        ?country dbo:flag ?flag.
+	?country dbo:flag ?flag.
 	{
 		{?country dbo:capital ?capital}
 		UNION
 		{?country dbp:capital ?capital}
 	}
 
-	FILTER(contains(str(?capital), %CAPITAL_URL%)))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 
 	# Population Demonym
 	?capital dbp:populationDemonym ?popDemonym.
-        BIND(str(?popDemonym) as ?popDemonymString)
+	BIND(str(?popDemonym) as ?popDemonymString)
 	# Remove URLs
-        FILTER (!contains(?popDemonymString, "http"))
+	FILTER (!contains(?popDemonymString, "http"))
 }
-order by ?capital
 LIMIT 1
