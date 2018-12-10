@@ -2,13 +2,21 @@
 <html>
 	<head>
 		<title>CAPITALS SEARCH ENGINE</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+		<!-- Nos feuilles de style -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+
+		<!-- Nos srcipts js-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/style.css" />
 		<script src="js/autocomplete.js"></script>
 		<script src="js/util.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="js/map.js"></script>
+
 	</head>
 	<body>
 			<div class="container-fluid">
@@ -153,9 +161,20 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class= "col-lg-12 jumbotron">
+						<div id="map" style ="height: 500px;"></div>
+					</div>
+				</div>
 			</div>
 			<div id="acteur"></div>
 	</body>
+
+	<script type="text/javascript">
+		initialiseMap('map');
+		setViewMap(48.864716, 2.349014);
+	</script>
+
 	<script type="text/javascript">
 		var capitals = [];
 		var capitalUrls = [];
@@ -170,13 +189,13 @@
 				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
 
 				var capital = getUrlParameter('capitalUrl');
-				console.log(capital);
+				// console.log(capital);
 
 				if (capital !== undefined && capital !== null && capitalUrls.indexOf(capital) >= 0) {
 					readTextFile("populationTotalRequest.rq", function(req) {
-						console.log(req);
+						// console.log(req);
 						req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
-						console.log(req);
+						// console.log(req);
 						var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
 						$.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
 							var total = resultatsReq.results.bindings[0]["callret-1"].value;
