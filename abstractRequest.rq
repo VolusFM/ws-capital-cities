@@ -11,7 +11,7 @@ select distinct ?capitalName str(?abstract) where
 	?capital foaf:name ?capitalName.
 
 	# Example URL
-	FILTER(contains(str(?capital), %CAPITAL_URL%)))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 	FILTER(lang(?abstract) = 'en')
 
 	?capital dbo:abstract ?abstract.
