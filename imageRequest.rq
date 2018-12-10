@@ -1,0 +1,12 @@
+select distinct ?capital ?image where 
+{
+	
+      ?capital foaf:depiction ?image.
+        
+
+
+	FILTER(str(?capital) = "http://dbpedia.org/resource/Algiers")
+	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
+}
+order by ?capital
+limit 1
