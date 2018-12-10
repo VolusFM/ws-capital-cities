@@ -14,7 +14,7 @@ select distinct ?capital str(?leaderName) str(?name) where
     OPTIONAL{?leaderName foaf:name ?name}
 
 
-	FILTER(str(?capital) = "http://dbpedia.org/resource/Abu_Dhabi")
+	FILTER(str(?capital) = %CAPITAL_URL%)
 	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
 }
 order by ?capital

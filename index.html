@@ -24,7 +24,7 @@
 				<div class="row">
 				</div>
 				<div class="row jumbotron">
-					<h2 class="col display-1" style="text-align: center;" id="nom">Paris</h2>
+					<h2 class="col display-1" style="text-align: center;" id="nom"></h2>
 				</div>
 				<div class="row container-fluid">
 					<div class="row">
@@ -77,10 +77,9 @@
 								</div>
 								<div class="row">
 									<p class="col">
-										Maire
+										Mayor
 									</p>
 									<p class="col" id="maire">
-										Anne Hidalgo
 									</p>
 								</div>
 								<div class="row">
@@ -100,10 +99,9 @@
 								</div>
 								<div class="row">
 									<p class="col">
-										Superficie
+										Surface area
 									</p>
 									<p class="col" id="superficie">
-										100 km²
 									</p>
 								</div>
 								<div class="row">
@@ -158,15 +156,26 @@
 				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
 
 				var capital = getUrlParameter('capitalUrl');
+				var index = capitalUrls.indexOf(capital);
 				console.log(capital);
 
-				if (capital !== undefined && capital !== null && capitalUrls.indexOf(capital) >= 0) {
+				if (capital !== undefined && capital !== null && index >= 0) {
+					var name = capitals[index];
+					$("#nom").text(name);
 					request("populationTotalRequest.rq", "#population", capital, (elem) => { return numberWithCommas(elem["callret-1"].value) + " hab.";});
 					request("popDemonymRequest.rq", "#gentille", capital, (elem) => {return elem["popDemonymString"].value;});
 					request("totalAreaRequest.rq", "#superficie", capital, (elem) => {return numberWithCommas(elem["callret-1"].value) + " km²";});
 					request("coordinatesRequest.rq", "#position", capital, (elem) => {return elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem["callret-3"].value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem["callret-6"].value;});
 					request("abstractRequest.rq", "#description", capital, (elem) => {return elem["callret-1"].value});
 					request("countryNameRequest.rq", "#pays", capital, (elem) => {return elem["labelS"].value});
+					request("leaderRequest.rq", "#maire", capital, (elem) => {
+							var call2 = elem["callret-2"];
+							if (call2 !== undefined && call2 !== null) {
+								return call2.value;
+							} else {
+								return elem["callret-1"].value;
+							}
+						});
 				}
 			});
 		});
