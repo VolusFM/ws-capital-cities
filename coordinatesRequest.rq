@@ -1,16 +1,15 @@
 select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?longitudeDegrees ?longitudeMinutes str(?longitudeEW) where 
 {
         #TODO: might need to bind strings to actual fields
-	?country a dbo:Country.
+        ?country a dbo:Country.
         ?country dbo:flag ?flag.
 	{
 		{?country dbo:capital ?capital}
 		UNION
 		{?country dbp:capital ?capital}
 	}
-
 	
-	FILTER(contains(str(?capital), %CAPITAL_URL%)))
+	FILTER(contains(str(?capital), %CAPITAL_URL%))
 
         # GPS Coordinates
         ?country dbp:latd ?latitudeDegrees.
@@ -21,4 +20,3 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?lon
         ?country dbp:longm ?longitudeMinutes.
         ?country dbp:longew ?longitudeEW. # East - West
 }
-order by ?capital
