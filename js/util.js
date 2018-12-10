@@ -12,3 +12,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function readTextFile(filename, callback) {
+    $.get(filename, function(data) {
+        callback(data);
+    }, 'text');
+}
