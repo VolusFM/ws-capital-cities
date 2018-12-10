@@ -1,7 +1,6 @@
 PREFIX dboPop: <http://dbpedia.org/ontology/PopulatedPlace/>
-select distinct ?capitalName xsd:double(?area) where 
+select distinct ?capitalName ?areaDouble where 
 {
-	#TODO: might need to bind area to an actual field
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
 	{
@@ -12,8 +11,9 @@ select distinct ?capitalName xsd:double(?area) where
 	?capital foaf:name ?capitalName.
 
 	# Example URL
-	FILTER(contains(str(?capital), %CAPITAL_URL%))
+	FILTER(str(?capital) = %CAPITAL_URL%)
 
 	# Total Area in square meters
 	?capital dboPop:areaTotal ?area.
+	BIND(xsd:double(?area) AS ?areaDouble)
 }

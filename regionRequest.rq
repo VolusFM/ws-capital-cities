@@ -2,7 +2,7 @@
 select distinct ?capitalName ?region ?typeRegion where
 {
 	?country a dbo:Country.
-        ?country dbo:flag ?flag.
+	?country dbo:flag ?flag.
 	{
 		{?country dbo:capital ?capital}
 		UNION
@@ -32,4 +32,3 @@ select distinct ?capitalName ?region ?typeRegion where
 	}
 
 }
-order by ?capital
