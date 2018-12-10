@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
+		<link rel="icon" href="images/logo.jpg" />
 		<link rel="stylesheet" href="css/style.css" />
 		<script src="js/autocomplete.js"></script>
 		<script src="js/util.js"></script>
@@ -91,10 +92,10 @@
 								</div>
 								<div class="row">
 									<p class="col">
-										Densité
+										Density
 									</p>
 									<p class="col" id="densite">
-										100 000 hab./km²
+										UNDEFINED
 									</p>
 								</div>
 								<div class="row">
@@ -160,6 +161,8 @@
 	<script type="text/javascript">
 		var capitals = [];
 		var capitalUrls = [];
+		var population;
+		var surface;
 
 		readTextFile("capitalCitiesRequest.rq", function(query) {
 			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
@@ -177,9 +180,17 @@
 				if (capital !== undefined && capital !== null && index >= 0) {
 					var name = capitals[index];
 					$("#nom").text(name);
-					request("populationTotalRequest.rq", "#population", capital, (elem) => { return numberWithCommas(elem["callret-1"].value) + " hab.";});
-					request("popDemonymRequest.rq", "#gentille", capital, (elem) => {return elem["popDemonymString"].value;});
-					request("totalAreaRequest.rq", "#superficie", capital, (elem) => {return numberWithCommas(elem["callret-1"].value) + " km²";});
+					request("populationTotalRequest.rq", "#population", capital, (elem) => { 
+							population = elem["callret-1"].value;
+							computeDensity();
+							return numberWithCommas(population) + " hab.";
+						});
+					request("popDemonymRequest.rq", "#gentille", capital, (elem) => {return capitalizeFirstLetter(elem["popDemonymString"].value);});
+					request("totalAreaRequest.rq", "#superficie", capital, (elem) => {
+							surface = elem["callret-1"].value;
+							computeDensity();
+							return numberWithCommas(surface) + " km²";
+						});
 					request("coordinatesRequest.rq", "#position", capital, (elem) => {return elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem["callret-3"].value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem["callret-6"].value;});
 					request("abstractRequest.rq", "#description", capital, (elem) => {return elem["callret-1"].value});
 					request("countryNameRequest.rq", "#pays", capital, (elem) => {return elem["labelS"].value});
@@ -260,6 +271,14 @@
 					}
 				});
 			});
+		}
+
+		function computeDensity() {
+			if (surface !== undefined && surface !== null && population !== undefined && population !== null) {
+				var density = population / surface;
+				var formatted = numberWithCommas(parseFloat(density).toFixed(2)) + " hab./km²";
+				$("#densite").text(formatted);
+			}
 		}
 
 		$('#bouton_recherche').click(rechercher);

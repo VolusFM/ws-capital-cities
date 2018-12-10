@@ -1,4 +1,4 @@
-select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?longitudeDegrees ?longitudeMinutes str(?longitudeEW) where 
+select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
 {
         #TODO: might need to bind strings to actual fields
         ?country a dbo:Country.
@@ -15,8 +15,10 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes str(?latitudeNS) ?lon
         ?country dbp:latd ?latitudeDegrees.
         ?country dbp:latm ?latitudeMinutes.
         ?country dbp:latns ?latitudeNS. # North - South
+        BIND(str(?latitudeNS) as ?directionNS)
 
         ?country dbp:longd ?longitudeDegrees.
         ?country dbp:longm ?longitudeMinutes.
         ?country dbp:longew ?longitudeEW. # East - West
+        BIND(str(?longitudeEW) as ?directionEW)
 }
