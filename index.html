@@ -88,10 +88,9 @@
 								</div>
 								<div class="row">
 									<p class="col">
-										Nombre d'habitants
+										Population
 									</p>
 									<p class="col" id="population">
-										10 000 000 hab.
 									</p>
 								</div>
 								<div class="row">
@@ -164,7 +163,6 @@
 		readTextFile("capitalCitiesRequest.rq", function(query) {
 			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
 			$.getJSON(url+"&callback=?", function(resultats) {
-				console.log(resultats.results.bindings);
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
 					capitalUrls.push(element.capital.value);
@@ -174,8 +172,17 @@
 				var capital = getUrlParameter('capitalUrl');
 				console.log(capital);
 
-				if (capital !== undefined && capital !== null && capitals.indexOf(capital) >= 0) {
-					
+				if (capital !== undefined && capital !== null && capitalUrls.indexOf(capital) >= 0) {
+					readTextFile("populationTotalRequest.rq", function(req) {
+						console.log(req);
+						req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+						console.log(req);
+						var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+						$.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+							var total = resultatsReq.results.bindings[0]["callret-1"].value;
+							$('#population').text(numberWithCommas(total) + " hab.");
+						});
+					});
 				}
 			});
 		});
