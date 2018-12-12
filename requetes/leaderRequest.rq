@@ -1,21 +1,20 @@
-SELECT DISTINCT ?capital ?leaderNameString ?nameString WHERE
+#priorize ?nameString
+SELECT DISTINCT ?capital ?leaderString ?nameString where
 {
-	{
-		{
-			{?capital dbo:leaderName ?leaderName}
-			UNION
-			{?capital dbp:leaderName ?leaderName}
-		}
+		{?capital dbo:leaderName ?leader}
 		UNION
-		{?capital dbo:mayor ?leaderName}
-	}
-
-	OPTIONAL{?leaderName foaf:name ?name}
-        BIND(str(?leaderName) AS ?leaderNameString)
-        BIND(str(?name) AS ?nameString)
-
-	# Example URL
-	# FILTER(str(?capital) = "http://dbpedia.org/resource/Algiers"))
-	FILTER(str(?capital) = %CAPITAL_URL%)
+		{?capital dbp:leaderName ?leader}
+		UNION
+		{?capital dbp:leader ?leader}
+		UNION
+		{?capital dbo:leader ?leader}
+		UNION
+		{?capital dbo:mayor ?leader}
+		FILTER(str(?capital) = %CAPITAL_URL%)
+		OPTIONAL{?leader rdf:type ?typeLeader}
+		FILTER(?typeLeader = foaf:Person || ?typeLeader = dbo:Person || !CONTAINS(str(?leader),"http://"))
+		OPTIONAL{?leader foaf:name ?name}
+		BIND(str(?leader) as ?leaderString)
+		BIND(str(?name) as ?nameString)
 }
 LIMIT 1
