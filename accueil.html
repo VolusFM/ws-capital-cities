@@ -69,6 +69,8 @@
 		});
 
 		var capitals = [];
+		var capitalsWithCountries = [];
+		var countries = [];
 		var capitalUrls = [];
 
 		readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
@@ -76,9 +78,11 @@
 			$.getJSON(url+"&callback=?", function(resultats) {
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
+					capitalsWithCountries.push(element.capitalName.value + " (" + element.countryName.value + ")");
+					countries.push(element.countryName.value);
 					capitalUrls.push(element.capital.value);
 				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
 			});
 		});
 
@@ -88,7 +92,7 @@
 		function rechercher() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
-			var index = capitals.indexOf(capital);
+			var index = capitalsWithCountries.indexOf(capital);
 			var capitalUrl = capitalUrls[index];
 
 			var newUrl = 'index.html' + '?capitalUrl=' + capitalUrl;
