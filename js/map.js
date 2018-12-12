@@ -14,8 +14,8 @@ function initialiseMap(id) {
 function setViewMap(longDeg, longMin, longDir, latDeg, latMin, latDir) {
 	var zoom = 10;
 	var long = parseInt(longDeg, 10) + parseInt(longMin, 10)/60;
-	var lat = parseInt(latDeg, 10) + parseInt(latMin/60, 10);
+	var lat = parseInt(latDeg, 10) + parseInt(latMin, 10)/60;
 	if(longDir == 'W') long *= -1;
 	if(latDir == 'S') lat *= -1;
-	map.setView([long, lat], zoom);
+	map.setView([lat, long], zoom);
 }
