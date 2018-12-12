@@ -1,0 +1,27 @@
+#A region can be a district, division, county, etc...
+select distinct ?continentString where
+{
+	?country a dbo:Country.
+        ?country dbo:flag ?flag.
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+	
+	# Example URL
+	# FILTER(contains(str(?capital), "http://dbpedia.org/resource/Berlin"))
+	FILTER(str(?capital) = %CAPITAL_URL%)
+
+	# Continent
+
+	?capital dct:subject ?continent.
+	FILTER(?continent = dbc:Capitals_in_Europe || ?continent = dbc:Capitals_in_North_America || ?continent = dbc:Capitals_in_Asia
+		|| ?continent = dbc:Capitals_in_South_America || ?continent =  dbc:Australian_capital_cities
+		|| ?continent = dbc:Capitals_in_Oceania || ?continent = dbc:Capitals_in_Africa
+		|| ?continent = dbc:Capitals_in_Central_America).
+
+	?continent rdfs:label ?continentLabel.
+        # Get only the continent string
+        BIND(REPLACE(str(?continentLabel), "Capitals in ", "") AS ?continentString)
+}
