@@ -44,6 +44,25 @@ function request(filename, fieldId, capital, format) {
     });
 }
 
+function requestSpotlight(filename, fieldId, capital, format) {
+    readTextFile(filename, function(req) {
+        req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+        var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+        $.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+            var first = result = resultatsReq.results.bindings[0];
+            if (first !== undefined && first !== null) {
+                var result = format(first);
+                spotlight(result, function(newResult) {
+                    $(fieldId).html(newResult);
+                });
+            } else {
+                $(fieldId).parent().hide();
+                $(fieldId).text("UNDEFINED");
+            }
+        });
+    });
+}
+
 function requestLink(filename, fieldId, capital, format) {
     readTextFile(filename, function(req) {
         req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
@@ -77,13 +96,12 @@ function requestImage(filename, fieldId, capital, format) {
     });
 }
 
-function spotlight(abstract) {
+function spotlight(abstract, callback) {
     var url = "https://api.dbpedia-spotlight.org/en/annotate?text=" + encodeURIComponent(abstract);
-    $.get({
-        url: url,
-        dataType: "text/html",
-        success: function (result) {
-            console.log(result);
-        }
-    })
+    $.get(url, function(result) {
+        var index1 = result.indexOf("<div>") + 5;
+        var index2 = result.indexOf("</div>");
+        var newAbstract = result.substring(index1, index2);
+        callback(newAbstract);
+    });
 }

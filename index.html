@@ -41,7 +41,7 @@
 						<div class="col-8">
 							<div>
 								<h3>Abstract</h3>
-								<p class="col-12 row text-justify" id="description" style="padding-left: 15px">
+								<p class="col-12 text-justify" id="description" style="padding-left: 15px">
 								</p>
 								<hr class="my-4">
 							</div>
@@ -207,9 +207,8 @@
 							return coordonnees;
 						});
 
-					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {
+					requestSpotlight("requetes/abstractRequest.rq", "#description", capital, (elem) => {
 						var abstract = elem["abstractString"].value;
-						spotlight(abstract);
 						return abstract;
 					});
 
