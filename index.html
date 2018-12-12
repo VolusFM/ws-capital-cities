@@ -39,11 +39,12 @@
 				</div>
 				<div class="row container-fluid">
 						<div class="col-8">
-							<h3>Abstract</h3>
-							<p class="row text-justify">
-								<span class="col-12" id="description" style="padding-left: 15px"></span>
-							</p>
-							<hr class="my-4">
+							<div>
+								<h3>Abstract</h3>
+								<p class="col-12 row text-justify" id="description" style="padding-left: 15px">
+								</p>
+								<hr class="my-4">
+							</div>
 							<h3>Map</h3>
 							<div class="row" style="width: 100%;">
 								<div class= "col-12">
@@ -52,8 +53,10 @@
 							</div>
 						</div>
 						<div class="col-4">
-							<img class="img-thumbnail" src="" alt="Image" id="image"></img>
-							<hr class="my-4">
+							<div>
+								<img class="img-thumbnail" src="" alt="Image" id="image"></img>
+								<hr class="my-4">
+							</div>
 							<div class="container-fluid">
 								<div class="row">
 									<p class="col">
@@ -178,7 +181,6 @@
 
 				var capital = getUrlParameter('capitalUrl');
 				var index = capitalUrls.indexOf(capital);
-				// console.log(capital);
 
 				if (capital !== undefined && capital !== null && index >= 0) {
 					var name = capitals[index];
@@ -201,7 +203,6 @@
 					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
 							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
 							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
-							console.log(capital);
 							addMarqeur(name, capital, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
 							return coordonnees;
 						});
@@ -290,6 +291,9 @@
 							}
 							
 							var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
+							if (climate === "") {
+								$("#climate").parent().hide();
+							}
 							return climate;
 						});
 					$("#pays").text(countries[index]);
@@ -297,28 +301,6 @@
 				}
 			});
 		});
-
-		function request(filename, fieldId, capital, format) {
-			// console.log("request");
-			// console.log(filename);
-			readTextFile(filename, function(req) {
-				req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
-				// console.log(req);
-				var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
-				$.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
-					// console.log(resultatsReq);
-					var first = result = resultatsReq.results.bindings[0];
-					if (first !== undefined && first !== null) {
-						var result = format(first);
-						// console.log(result);
-						$(fieldId).text(result);
-					} else {
-						$(fieldId).parent().hide();
-						$(fieldId).text("UNDEFINED");
-					}
-				});
-			});
-		}
 
 		function computeDensity() {
 			if (surface !== undefined && surface !== null && population !== undefined && population !== null) {
@@ -351,7 +333,6 @@
                         capitalUrls.push(element.capital.value);
                     });
 					var random_capital = capitalUrls[Math.floor(Math.random()*capitalUrls.length)];
-					console.log(random_capital);
                     var newUrl = 'index.html' + '?capitalUrl=' + random_capital;
 					window.location = newUrl;
                 });
