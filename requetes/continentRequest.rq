@@ -1,5 +1,5 @@
 #A region can be a district, division, county, etc...
-select distinct ?capitalName ?Labelcontinent where
+select distinct ?continentString where
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -8,15 +8,10 @@ select distinct ?capitalName ?Labelcontinent where
 		UNION
 		{?country dbp:capital ?capital}
 	}
-	?capital foaf:name ?capitalName.
-	?country <http://purl.org/linguistics/gold/hypernym> ?type.
-
-	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom ||
-	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
-
-	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
-	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
-	FILTER NOT EXISTS {?capital a dbo:Person}
+	
+	# Example URL
+	# FILTER(contains(str(?capital), "http://dbpedia.org/resource/Berlin"))
+	FILTER(str(?capital) = %CAPITAL_URL%)
 
 	# Continent
 
@@ -26,6 +21,7 @@ select distinct ?capitalName ?Labelcontinent where
 		|| ?continent = dbc:Capitals_in_Oceania || ?continent = dbc:Capitals_in_Africa
 		|| ?continent = dbc:Capitals_in_Central_America).
 
-	?continent rdfs:label ?Labelcontinent.
+	?continent rdfs:label ?continentLabel.
+        # Get only the continent string
+        BIND(REPLACE(str(?continentLabel), "Capitals in ", "") AS ?continentString)
 }
-order by ?capital

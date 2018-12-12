@@ -1,8 +1,7 @@
-select distinct ?capital ?capitalName ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
+select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
-        ?capital rdfs:label ?capitalName
 	{
 		{?country dbo:capital ?capital}
 		UNION
@@ -14,7 +13,6 @@ select distinct ?capital ?capitalName ?latitudeDegrees ?latitudeMinutes ?directi
 	# Ensure it's the actual capital of an actual country
 	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
 	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
-	FILTER (lang(?capitalName) = 'en') 
 	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
 	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
 	FILTER NOT EXISTS {?capital a dbo:Person}
