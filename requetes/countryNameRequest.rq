@@ -1,4 +1,4 @@
-select distinct ?capital ?labelS ?labelC1 ?labelC2 where 
+select distinct ?capital ?labelState ?labelCity ?labelCityLocal where 
 {
 	{
 		{?country dbo:capital ?capital}
@@ -10,13 +10,13 @@ select distinct ?capital ?labelS ?labelC1 ?labelC2 where
 	?country dbo:language ?lang.
 	?lang dbo:iso6391Code ?code.
 
-	?country rdfs:label ?labelS. 
-	?capital rdfs:label ?labelC1. 
-	?capital rdfs:label ?labelC2. 
+	?country rdfs:label ?labelState. 
+	?capital rdfs:label ?labelCity. 
+	?capital rdfs:label ?labelCityLocal. 
         
 	FILTER(contains(str(?capital), %CAPITAL_URL%))
-	FILTER(lang(?labelS) = 'en')
-	FILTER(lang(?labelC1) = 'en')
-	FILTER(lang(?labelC2) = ?code)
+	FILTER(lang(?labelState) = 'en')
+	FILTER(lang(?labelCity) = 'en')
+	FILTER(lang(?labelCityLocal) = ?code)
 }
 LIMIT 1

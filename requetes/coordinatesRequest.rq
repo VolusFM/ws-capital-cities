@@ -1,6 +1,5 @@
 select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
 {
-        #TODO: might need to bind strings to actual fields
         ?country a dbo:Country.
         ?country dbo:flag ?flag.
 	{
