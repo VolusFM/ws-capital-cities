@@ -63,10 +63,8 @@ function requestLink(filename, fieldId, capital, format) {
                 var result = format(first);
                 // console.log(result);
                 $(fieldId).attr("href", result);
-                $(fieldId).text(result);
             } else {
                 $(fieldId).parent().parent().hide();
-                $(fieldId).text("UNDEFINED");
             }
         });
     });
