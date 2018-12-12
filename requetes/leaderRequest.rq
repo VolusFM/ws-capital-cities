@@ -17,5 +17,4 @@ select distinct ?capital ?leaderNameString ?nameString where
 	FILTER(str(?capital) = %CAPITAL_URL%)
 	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
 }
-order by ?capital
 limit 1

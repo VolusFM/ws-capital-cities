@@ -1,4 +1,4 @@
-select distinct ?capital ?capitalName where 
+select distinct ?capital ?capitalName ?CountryName where 
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -9,7 +9,9 @@ select distinct ?capital ?capitalName where
 		{?country dbp:capital ?capital}
 	}
 
+        ?country rdfs:label ?CountryName. 
 	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+        FILTER(lang(?CountryName) = 'en')
 
 	# Ensure it's the actual capital of an actual country
 	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
@@ -18,5 +20,6 @@ select distinct ?capital ?capitalName where
 	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
 	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
 	FILTER NOT EXISTS {?capital a dbo:Person}
+
 }
 order by ?capital

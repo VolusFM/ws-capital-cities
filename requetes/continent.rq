@@ -1,5 +1,5 @@
 #A region can be a district, division, county, etc...
-select distinct ?capitalName ?Labelcontinent where
+select distinct ?capitalName ?continentLabel where
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -26,6 +26,6 @@ select distinct ?capitalName ?Labelcontinent where
 		|| ?continent = dbc:Capitals_in_Oceania || ?continent = dbc:Capitals_in_Africa
 		|| ?continent = dbc:Capitals_in_Central_America).
 
-	?continent rdfs:label ?Labelcontinent.
+	?continent rdfs:label ?continentLabel.
 }
 order by ?capital
