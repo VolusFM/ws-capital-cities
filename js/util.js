@@ -26,3 +26,67 @@ function numberWithCommas(x) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function request(filename, fieldId, capital, format) {
+    // console.log("request");
+    // console.log(filename);
+    readTextFile(filename, function(req) {
+        req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+        // console.log(req);
+        var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+        $.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+            // console.log(resultatsReq);
+            var first = result = resultatsReq.results.bindings[0];
+            if (first !== undefined && first !== null) {
+                var result = format(first);
+                // console.log(result);
+                $(fieldId).text(result);
+            } else {
+                $(fieldId).parent().hide();
+                $(fieldId).text("UNDEFINED");
+            }
+        });
+    });
+}
+
+function requestLink(filename, fieldId, capital, format) {
+    // console.log("request");
+    // console.log(filename);
+    readTextFile(filename, function(req) {
+        req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+        // console.log(req);
+        var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+        $.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+            // console.log(resultatsReq);
+            var first = result = resultatsReq.results.bindings[0];
+            if (first !== undefined && first !== null) {
+                var result = format(first);
+                // console.log(result);
+                $(fieldId).attr("href", result);
+                $(fieldId).text(result);
+            } else {
+                $(fieldId).text("UNDEFINED");
+            }
+        });
+    });
+}
+
+function requestImage(filename, fieldId, capital, format) {
+    // console.log("request");
+    readTextFile(filename, function(req) {
+        req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+        // console.log(req);
+        var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+        $.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+            // console.log(resultatsReq);
+            var first = result = resultatsReq.results.bindings[0];
+            if (first !== undefined && first !== null) {
+                var result = format(first);
+                // console.log(result);
+                $(fieldId).attr("src", result);
+            } else {
+                $(fieldId).attr("alt", "UNDEFINED");
+            }
+        });
+    });
+}
