@@ -97,7 +97,7 @@ function requestImage(filename, fieldId, capital, format) {
 }
 
 function spotlight(abstract, callback) {
-    var url = "https://api.dbpedia-spotlight.org/en/annotate?text=" + encodeURIComponent(abstract);
+    var url = "https://api.dbpedia-spotlight.org/en/annotate?text=" + encodeURIComponent(abstract) + "&confidence=0.9";
     $.get(url, function(result) {
         var index1 = result.indexOf("<div>") + 5;
         var index2 = result.indexOf("</div>");
