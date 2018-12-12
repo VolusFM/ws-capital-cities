@@ -91,8 +91,7 @@
                     });
 					var random_capital = capitalUrls[Math.floor(Math.random()*capitalUrls.length)];
 					console.log(random_capital);
-                    var capital = getUrlParameter('capitalUrl');
-                    var newUrl = 'index.html' + '?capitalUrl=' + capital;
+                    var newUrl = 'index.html' + '?capitalUrl=' + random_capital;
 					window.location = newUrl;
                 });
             });
