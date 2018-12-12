@@ -29,6 +29,8 @@
 						</div>
 					</div>
 					<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+					<p>&nbsp;</p>
+					<button id="bouton_random" class="col-1 btn btn-warning" type="submit"><i class="fas fa-dice"></i></button>
 				</div>
 				<div class="row">
 				</div>
@@ -77,6 +79,23 @@
 			var newUrl = 'index.html' + '?capitalUrl=' + capitalUrl;
 			window.location = newUrl;
 		};
+
+		$('#bouton_random').click(randomCapital);
+
+		function randomCapital() {
+            readTextFile("requetes/capitalCitiesRequest.rq", function (query) {
+                var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=' + encodeURIComponent(query) + '&format=json';
+                $.getJSON(url + "&callback=?", function (resultats) {
+                    resultats.results.bindings.forEach(function (element) {
+                        capitalUrls.push(element.capital.value);
+                    });
+					var random_capital = capitalUrls[Math.floor(Math.random()*capitalUrls.length)];
+					console.log(random_capital);
+                    var newUrl = 'index.html' + '?capitalUrl=' + random_capital;
+					window.location = newUrl;
+                });
+            });
+        }
 
 	</script>
 </html>
