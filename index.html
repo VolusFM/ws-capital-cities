@@ -21,7 +21,7 @@
 	</head>
 	<body>
 			<div class="container-fluid">
-				<div class="row navbar navbar-dark bg-dark">
+				<div class="row navbar fixed-top navbar-dark bg-dark">
 					<a class="col navbar-brand" href="accueil.html">CAPITALS SEARCH ENGINE</a>
 					<div class="col-3">
 						<div id="autocomplete" class="autocomplete">
@@ -39,10 +39,13 @@
 				</div>
 				<div class="row container-fluid">
 						<div class="col-8">
-							<h3>Abstract</h3>
-							<p class="row text-justify">
-								<span class="col-12" id="description" style="padding-left: 15px"></span>
-							</p>
+							<div>
+								<h3>Abstract</h3>
+								<p class="col-12 row text-justify" id="description" style="padding-left: 15px">
+								</p>
+								<hr class="my-4">
+							</div>
+							<h3>Map</h3>
 							<div class="row" style="width: 100%;">
 								<div class= "col-12">
 									<div id="map" style ="height: 500px;"></div>
@@ -50,7 +53,10 @@
 							</div>
 						</div>
 						<div class="col-4">
-							<img class="img-thumbnail" src="" alt="Image" id="image"></img>
+							<div>
+								<img class="img-thumbnail" src="" alt="Image" id="image"></img>
+								<hr class="my-4">
+							</div>
 							<div class="container-fluid">
 								<div class="row">
 									<p class="col">
@@ -117,6 +123,14 @@
 								</div>
 								<div class="row">
 									<p class="col">
+										Climate Information
+									</p>
+									<p class="col" id="climate">
+									</p>
+								</div>
+
+								<div class="row">
+									<p class="col">
 										Position
 									</p>
 									<p class="col" id="position">
@@ -167,7 +181,6 @@
 
 				var capital = getUrlParameter('capitalUrl');
 				var index = capitalUrls.indexOf(capital);
-				// console.log(capital);
 
 				if (capital !== undefined && capital !== null && index >= 0) {
 					var name = capitals[index];
@@ -190,14 +203,19 @@
 					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
 							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
 							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
+							addMarqeur(name, capital, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
 							return coordonnees;
 						});
 
 					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {return elem["abstractString"].value});
 
 					request("requetes/countryNameRequest.rq", "#nom-local", capital, (elem) => {
-						return elem["labelCityLocal"].value}
-					);
+						if (elem["labelCityLocal"] !== undefined) {
+							return elem["labelCityLocal"].value
+						} 
+						$("#nom-local").parent().hide();
+						return "";
+					});
 
 					request("requetes/leaderRequest.rq", "#maire", capital, (elem) => {
 							var call2 = elem["nameString"];
@@ -217,7 +235,63 @@
 					request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
 
 					request("requetes/regionRequest.rq", "#region", capital, (elem) => {return elem.regionName.value});
-
+					
+					request("requetes/climateRequest.rq", "#climate", capital, (elem) => {
+						
+														var lowC = elem["yearLowCDouble"];
+							if(lowC == null || lowC == undefined){ lowC = "";}
+							else{ lowC = "Year low: " + lowC.value + "°C" + '<br/>';}
+							
+							var meanC = elem["yearMeanCDouble"];
+							if(meanC == null || meanC == undefined){ meanC = "";
+							} else{
+								meanC = "Year mean: "+ meanC.value + "°C " + '<br/>';
+							}
+							var highC = elem["yearHighCDouble"];
+							if(highC == null || highC == undefined){ highC = "";
+							} else{
+								highC = "Year high: " + highC.value + " °C" + '<br/>';
+							}
+							var recordLowC = elem["yearRecordLowCDouble"];
+							if(recordLowC == null || recordLowC == undefined){ recordLowC = "";
+							} else{
+								recordLowC = "Record low: " + recordLowC.value + "°C" + '<br/>';
+							}
+							var recordHighC = elem["yearRecordHighCDouble"];
+							if(recordHighC == null || recordHighC == undefined){ recordHighC = "";
+							} else{
+								recordHighC = "Record high: " + recordHighC.value + "°C" + '<br/>';
+							}
+							
+							var precipitationDays = elem["yearPrecipitationDaysDouble"];
+							if(precipitationDays == null || precipitationDays == undefined){ precipitationDays = "";
+							} else{
+								precipitationDays = "Rainy days: " + precipitationDays.value + '<br/>';
+							}
+							
+							var precipitationMm = elem["yearPrecipitationMmDouble"];
+							if(precipitationMm == null || precipitationMm == undefined){ precipitationMm = "";
+							} else{
+								precipitationMm = "Yearly precipitation: " + precipitationMm.value + " mm" + '<br/>';
+							}
+							
+							var snowDays = elem["yearSnowDaysDouble"];
+							if(snowDays == null || snowDays == undefined){ snowDays = "";
+							} else{
+								snowDays = "Snowy days: " + snowDays.value + '<br/>';
+							}
+							var snowCm = elem["yearSnowCmInteger"];
+							if(snowCm == null || snowCm == undefined){ snowCm = "";
+							} else{
+								snowCm = "Yearly snow: " + snowCm.value + " cm";
+							}
+							
+							var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
+							if (climate === "") {
+								$("#climate").parent().hide();
+							}
+							return climate;
+						});
 					$("#pays").text(countries[index]);
 
 				}
@@ -261,6 +335,5 @@
                 });
             });
         }
-        setTimeout(function() { console.log("resize"); $("#map2").height(510) }, 5000);
 	</script>
 </html>

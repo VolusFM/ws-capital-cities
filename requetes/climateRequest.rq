@@ -1,4 +1,4 @@
-SELECT DISTINCT ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDouble ?yearLowCDouble ?yearRecordLowCDouble ?yearPrecipitationDaysDouble ?yearPrecipitationMmDouble ?yearSunDouble WHERE
+SELECT DISTINCT ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDouble ?yearLowCDouble ?yearRecordLowCDouble ?yearPrecipitationDaysDouble ?yearPrecipitationMmDouble ?yearSnowDaysDouble ?yearSnowCmInteger WHERE
 {
         ?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -15,19 +15,30 @@ SELECT DISTINCT ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDoubl
 
         # Climate fields
         OPTIONAL{?capital dbp:yearHighC ?yearHighC.}
-	BIND(xsd:double(?yearHighC) as ?yearHighCDouble) 
+		BIND(xsd:double(?yearHighC) as ?yearHighCDouble) 
+        
         OPTIONAL{?capital dbp:yearRecordHighC ?yearRecordHighC.}
-	BIND(xsd:double(?yearRecordHighC) as ?yearRecordHighCDouble) 
+		BIND(xsd:double(?yearRecordHighC) as ?yearRecordHighCDouble) 
+        
         OPTIONAL{?capital dbp:yearMeanC ?yearMeanC.}
-	BIND(xsd:double(?yearMeanC) as ?yearMeanCDouble) 
+		BIND(xsd:double(?yearMeanC) as ?yearMeanCDouble) 
+        
         OPTIONAL{?capital dbp:yearLowC ?yearLowC.}
-	BIND(xsd:double(?yearLowC) as ?yearLowCDouble) 
+		BIND(xsd:double(?yearLowC) as ?yearLowCDouble) 
+        
         OPTIONAL{?capital dbp:yearRecordLowC ?yearRecordLowC.}
-	BIND(xsd:double(?yearRecordLowC) as ?yearRecordLowCDouble) 
+		BIND(xsd:double(?yearRecordLowC) as ?yearRecordLowCDouble) 
+        
         OPTIONAL{?capital dbp:yearPrecipitationDays ?yearPrecipitationDays.}
-	BIND(xsd:double(?yearPrecipitationDays) as ?yearPrecipitationDaysDouble) 
+		BIND(xsd:double(?yearPrecipitationDays) as ?yearPrecipitationDaysDouble) 
+        
         OPTIONAL{?capital dbp:yearPrecipitationMm ?yearPrecipitationMm.}
-	BIND(xsd:double(?yearPrecipitationMm) as ?yearPrecipitationMmDouble) 
-        OPTIONAL{?capital dbp:yearSun ?yearSun.}
-	BIND(xsd:double(?yearSun) as ?yearSunDouble) 
+		BIND(xsd:double(?yearPrecipitationMm) as ?yearPrecipitationMmDouble) 
+        
+        OPTIONAL{?capital dbp:yearSnowDays ?yearSnowDays.}
+		BIND(xsd:double(?yearSnowDays) as ?yearSnowDaysDouble) 
+		
+		OPTIONAL{?capital dbp:yearSnowCm ?yearSnowCm.}
+		BIND(xsd:integer(?yearSnowCm) as ?yearSnowCmInteger) 
 }
+LIMIT 1
