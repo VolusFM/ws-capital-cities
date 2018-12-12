@@ -102,7 +102,6 @@
 										Density
 									</p>
 									<p class="col" id="densite">
-										UNDEFINED
 									</p>
 								</div>
 								<div class="row">
@@ -157,6 +156,7 @@
 		var capitalUrls = [];
 		var population;
 		var surface;
+		$("#densite").parent().hide();
 
 		readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
 			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
@@ -242,6 +242,7 @@
 						// console.log(result);
 						$(fieldId).text(result);
 					} else {
+						$(fieldId).parent().hide();
 						$(fieldId).text("UNDEFINED");
 					}
 				});
@@ -295,6 +296,7 @@
 				var density = population / surface;
 				var formatted = numberWithCommas(parseFloat(density).toFixed(2)) + " hab./km²";
 				$("#densite").text(formatted);
+				$("#densite").parent().show();
 			}
 		}
 
