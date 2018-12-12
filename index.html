@@ -148,9 +148,7 @@
 
 	<script type="text/javascript">
 		initialiseMap('map');
-	</script>
 
-	<script type="text/javascript">
 		var capitals = [];
 		var capitalsWithCountries = [];
 		var capitalUrls = [];
@@ -192,7 +190,7 @@
 
 					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
 							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
-							setViewMap(elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value);
+							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
 							return coordonnees;
 						});
 

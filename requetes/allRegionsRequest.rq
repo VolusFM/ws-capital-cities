@@ -1,5 +1,5 @@
-#A region can be a district, division, country, etc.
-select distinct ?regionName ?typeRegion where
+#A region can be a district, division, county, etc...
+select distinct ?region ?typeRegion where
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -8,10 +8,14 @@ select distinct ?regionName ?typeRegion where
 		UNION
 		{?country dbp:capital ?capital}
 	}
-	
-	# Example URL
-	# FILTER(contains(str(?capital), "http://dbpedia.org/resource/Berlin"))
-	FILTER(str(?capital) = %CAPITAL_URL%)
+	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+
+	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom ||
+	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
+
+	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
+	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
+	FILTER NOT EXISTS {?capital a dbo:Person}
 
 	# Region
 	OPTIONAL{
@@ -25,8 +29,5 @@ select distinct ?regionName ?typeRegion where
 			|| ?typeRegion = dbr:Oblast || ?typeRegion = dbr:Province || ?typeRegion = dbr:Provinces || ?typeRegion = dbr:Regions || ?typeRegion = dbr:Units
 			|| ?typeRegion = dbr:Zones )
 	}
-        ?region rdfs:label ?regionLabel
-        FILTER(lang(?regionLabel) = 'en')
 
-        BIND(str(?regionLabel) AS ?regionName)
 }

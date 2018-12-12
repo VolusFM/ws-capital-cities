@@ -1,16 +1,13 @@
 # ws-capital-cities
 
-#Améliorations
-## Page d'accueil
-### Carte cliquable des capitales
+##Améliorations
+### Page d'accueil
+#### Carte cliquable des capitales
+### Bouton suggestion (random)
+##Test de description avec des liens grace à dbPedia spotlight
 
-## Bouton suggestion (random)
 
-## Autocompletion
-### SPARQL : pas d'url
-### JS : faire un peu de trie
-
-## D'autres champs
-### Monuments connus
-### Personnes connus
-### Affichage sur la carte
+### D'autres champs
+#### Monuments connus
+#### Personnes connus
+#### Affichage sur la carte
