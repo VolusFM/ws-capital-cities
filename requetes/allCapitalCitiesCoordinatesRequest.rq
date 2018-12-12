@@ -1,4 +1,4 @@
-select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
+SELECT DISTINCT ?capital ?capitalName ?countryName ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -8,7 +8,12 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitu
 		{?country dbp:capital ?capital}
 	}
 
+	?country rdfs:label ?countryName. 
 	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+        FILTER(lang(?countryName) = 'en')
+	
+        ?capital rdfs:label ?capitalName
+	FILTER (lang(?capitalName) = 'en') 
 
 	# Ensure it's the actual capital of an actual country
 	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
@@ -21,11 +26,11 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitu
         ?country dbp:latd ?latitudeDegrees.
         ?country dbp:latm ?latitudeMinutes.
         ?country dbp:latns ?latitudeNS. # North - South
-        BIND(str(?latitudeNS) as ?directionNS)
+        BIND(str(?latitudeNS) AS ?directionNS)
 
         ?country dbp:longd ?longitudeDegrees.
         ?country dbp:longm ?longitudeMinutes.
         ?country dbp:longew ?longitudeEW. # East - West
-        BIND(str(?longitudeEW) as ?directionEW)
+        BIND(str(?longitudeEW) AS ?directionEW)
 }
-order by ?capital
+ORDER BY ?capital
