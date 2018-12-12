@@ -1,4 +1,4 @@
-select distinct ?popTotalInt ?popYearInt where 
+SELECT DISTINCT ?popTotalInt ?popYearInt WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.

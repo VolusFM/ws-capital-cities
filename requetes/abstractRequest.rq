@@ -1,4 +1,4 @@
-select distinct ?abstractString where 
+SELECT DISTINCT ?abstractString WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -9,7 +9,7 @@ select distinct ?abstractString where
 	}
 
 	# Example URL
-	# FILTER(contains(str(?capital), "http://dbpedia.org/resource/Berlin"))
+	# FILTER(str(?capital) = "http://dbpedia.org/resource/Berlin"))
 	FILTER(str(?capital) = %CAPITAL_URL%)
 	FILTER(lang(?abstract) = 'en')
 
