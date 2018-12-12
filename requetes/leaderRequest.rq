@@ -1,4 +1,3 @@
-#priorize ?nameString
 SELECT DISTINCT ?capital ?leaderString ?nameString where
 {
 		{?capital dbo:leaderName ?leader}
@@ -15,6 +14,6 @@ SELECT DISTINCT ?capital ?leaderString ?nameString where
 		FILTER(?typeLeader = foaf:Person || ?typeLeader = dbo:Person || !CONTAINS(str(?leader),"http://"))
 		OPTIONAL{?leader foaf:name ?name}
 		BIND(str(?leader) as ?leaderString)
-		BIND(str(?name) as ?nameString)
+		BIND(IF(CONTAINS(str(?leader),"http://"), str(?name), str(?leader)) as ?nameString)
 }
 LIMIT 1
