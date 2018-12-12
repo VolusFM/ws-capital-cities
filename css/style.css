@@ -44,3 +44,11 @@ input[type=submit] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.fixed-top {
+  padding-right: 30px;
+}
+
+#map {
+  border-radius: 3px;
+}
