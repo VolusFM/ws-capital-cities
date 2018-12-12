@@ -1,4 +1,4 @@
-select distinct ?popDemonymString where 
+SELECT DISTINCT ?popDemonymString WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.

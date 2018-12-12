@@ -1,5 +1,5 @@
-#A region can be a district, division, county, etc...
-select distinct ?capitalName ?continentLabel where
+# A continent can be a kingdom, state, country, etc...
+SELECT DISTINCT ?capitalName ?continentLabel WHERE
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -19,7 +19,6 @@ select distinct ?capitalName ?continentLabel where
 	FILTER NOT EXISTS {?capital a dbo:Person}
 
 	# Continent
-
 	?capital dct:subject ?continent.
 	FILTER(?continent = dbc:Capitals_in_Europe || ?continent = dbc:Capitals_in_North_America || ?continent = dbc:Capitals_in_Asia
 		|| ?continent = dbc:Capitals_in_South_America || ?continent =  dbc:Australian_capital_cities
@@ -28,4 +27,4 @@ select distinct ?capitalName ?continentLabel where
 
 	?continent rdfs:label ?continentLabel.
 }
-order by ?capital
+ORDER BY ?capital

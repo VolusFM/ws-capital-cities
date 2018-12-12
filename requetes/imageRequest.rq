@@ -1,8 +1,8 @@
-select distinct ?capital ?image where 
+SELECT DISTINCT ?capital ?image WHERE
 {	
 	?capital foaf:depiction ?image.
         
 	FILTER(str(?capital) = %CAPITAL_URL%)
 	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
 }
-limit 1
+LIMIT 1

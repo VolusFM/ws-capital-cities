@@ -1,4 +1,4 @@
-select distinct ?capital ?page where 
+SELECT DISTINCT ?capital ?page WHERE
 {
 	?capital foaf:homepage ?page.
 	FILTER(str(?capital) = %CAPITAL_URL%)

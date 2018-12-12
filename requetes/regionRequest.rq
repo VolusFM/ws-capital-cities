@@ -1,5 +1,5 @@
-#A region can be a district, division, country, etc.
-select distinct ?regionName ?typeRegion where
+# A region can be a district, division, country, etc.
+SELECT DISTINCT ?regionName ?typeRegion WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
