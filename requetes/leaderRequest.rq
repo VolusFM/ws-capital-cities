@@ -1,4 +1,4 @@
-select distinct ?capital ?leaderNameString ?nameString where 
+SELECT DISTINCT ?capital ?leaderNameString ?nameString WHERE
 {
 	{
 		{
@@ -11,10 +11,11 @@ select distinct ?capital ?leaderNameString ?nameString where
 	}
 
 	OPTIONAL{?leaderName foaf:name ?name}
-        BIND(str(?leaderName) as ?leaderNameString)
-        BIND(str(?name) as ?nameString)
+        BIND(str(?leaderName) AS ?leaderNameString)
+        BIND(str(?name) AS ?nameString)
 
+	# Example URL
+	# FILTER(str(?capital) = "http://dbpedia.org/resource/Algiers"))
 	FILTER(str(?capital) = %CAPITAL_URL%)
-	#FILTER(contains(str(?capital), "http://dbpedia.org/resource/Algiers"))
 }
-limit 1
+LIMIT 1

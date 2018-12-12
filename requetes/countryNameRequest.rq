@@ -1,4 +1,4 @@
-select distinct ?capital ?labelState ?labelCity ?labelCityLocal where 
+SELECT DISTINCT ?capital ?labelState ?labelCity ?labelCityLocal WHERE
 {
 	{
 		{?country dbo:capital ?capital}

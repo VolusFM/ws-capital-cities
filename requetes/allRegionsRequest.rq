@@ -1,5 +1,5 @@
-#A region can be a district, division, county, etc...
-select distinct ?region ?typeRegion where
+# A region can be a district, division, county, etc...
+SELECT DISTINCT ?region ?typeRegion WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -18,7 +18,8 @@ select distinct ?region ?typeRegion where
 	FILTER NOT EXISTS {?capital a dbo:Person}
 
 	# Region
-	OPTIONAL{
+	OPTIONAL
+	{
 		{ ?capital dbo:region ?region }
 		UNION
 		{ ?capital dbo:isPartOf ?region }
