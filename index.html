@@ -161,8 +161,8 @@
 			$.getJSON(url+"&callback=?", function(resultats) {
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
-					capitalsWithCountries.push(element.capitalName.value + " (" + element.CountryName.value + ")");
-					countries.push(element.CountryName.value);
+					capitalsWithCountries.push(element.capitalName.value + " (" + element.countryName.value + ")");
+					countries.push(element.countryName.value);
 					capitalUrls.push(element.capital.value);
 				});
 				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
@@ -263,6 +263,6 @@
                 });
             });
         }
-        setTimeout(function() { window.resizeTo(window.innerWidth, window.innerHeight); }, 2000);
+        setTimeout(function() { console.log("resize"); $("#map").height(510) }, 5000);
 	</script>
 </html>
