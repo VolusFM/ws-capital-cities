@@ -1,4 +1,4 @@
-select distinct ?capitalName ?popDemonymString where 
+select distinct ?popDemonymString where 
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -7,7 +7,6 @@ select distinct ?capitalName ?popDemonymString where
 		UNION
 		{?country dbp:capital ?capital}
 	}
-	?capital foaf:name ?capitalName.
 	FILTER(str(?capital) = %CAPITAL_URL%)
 
 	# Population Demonym
