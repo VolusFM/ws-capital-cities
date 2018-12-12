@@ -112,30 +112,6 @@
 								</div>
 								<div class="row">
 									<p class="col">
-										Altitude
-									</p>
-									<p class="col" id="altitude">
-										100 m
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Altitude minimum
-									</p>
-									<p class="col" id="altitude-min">
-										80 m
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Altitude maximum
-									</p>
-									<p class="col" id="altitude-max">
-										150 m
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
 										Position
 									</p>
 									<p class="col" id="position">
@@ -237,13 +213,13 @@
 							}
 						});
 
-					request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["callret-1"].value});
+					request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["mottoString"].value});
 
 					requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
 
 					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value});
 
-					request("requetes/continent.rq", "#continent", capital, (elem) => {return elem.continentLabel.value});
+					request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
 
 				}
 			});
