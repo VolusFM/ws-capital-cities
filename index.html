@@ -237,7 +237,7 @@
 							}
 						});
 
-					request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["callret-1"].value});
+					request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["mottoString"].value});
 
 					requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
 
