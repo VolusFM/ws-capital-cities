@@ -207,7 +207,11 @@
 							return coordonnees;
 						});
 
-					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {return elem["abstractString"].value});
+					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {
+						var abstract = elem["abstractString"].value;
+						spotlight(abstract);
+						return abstract;
+					});
 
 					request("requetes/countryNameRequest.rq", "#nom-local", capital, (elem) => {
 						if (elem["labelCityLocal"] !== undefined) {

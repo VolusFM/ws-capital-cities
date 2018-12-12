@@ -76,3 +76,14 @@ function requestImage(filename, fieldId, capital, format) {
         });
     });
 }
+
+function spotlight(abstract) {
+    var url = "https://api.dbpedia-spotlight.org/en/annotate?text=" + encodeURIComponent(abstract);
+    $.get({
+        url: url,
+        dataType: "text/html",
+        success: function (result) {
+            console.log(result);
+        }
+    })
+}
