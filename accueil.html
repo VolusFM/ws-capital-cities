@@ -25,28 +25,24 @@
 					<h1 class="col navbar-brand">CAPITALS SEARCH ENGINE</h1>
 					<div class="col-3">
 						<div id="autocomplete" class="autocomplete">
-							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="Une capitale ou un pays" value="" />
+							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="City or country name" value="" />
 						</div>
 					</div>
 					<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
 					<p>&nbsp;</p>
 					<button id="bouton_random" class="col-1 btn btn-warning" type="submit"><i class="fas fa-dice"></i></button>
 				</div>
-				<div class="row">
-				</div>
-				<div class="row jumbotron">
-					<h2 class="display-1" style="text-align: center;" id="nom">CAPITALS SEARCH ENGINE</h2>
-					<hr class="my-4">
-				<p class="lead">Pour commencer la recherche, saississez une capitale ou un pays dans la barre de recherche, ou sélectionnez un lieu sur la carte.</p>
-				</div>
-				<div class="row">
-					<div class= "col-lg-12 jumbotron">
+				<div class="row text-center jumbotron">
+					<div class= "col-lg-12">
+						<h2 class="display-1" style="text-align: center;" id="nom">CAPITALS SEARCH ENGINE</h2>
+						<hr class="my-4">
+						<p class="lead">To search a capital, type a city or country's name in the search bar, or select a place on the map.</p>
+					</div>
+					<div class= "col-lg-12">
 						<div id="map" style ="height: 500px;"></div>
 					</div>
 				</div>
 			</div>
-			<div id="acteur"></div>
-			<div id="flomut"></div>
 	</body>
 	
 	<script type="text/javascript">
@@ -69,6 +65,8 @@
 		});
 
 		var capitals = [];
+		var capitalsWithCountries = [];
+		var countries = [];
 		var capitalUrls = [];
 
 		readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
@@ -76,9 +74,11 @@
 			$.getJSON(url+"&callback=?", function(resultats) {
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
+					capitalsWithCountries.push(element.capitalName.value + " (" + element.countryName.value + ")");
+					countries.push(element.countryName.value);
 					capitalUrls.push(element.capital.value);
 				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
 			});
 		});
 
@@ -88,7 +88,7 @@
 		function rechercher() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
-			var index = capitals.indexOf(capital);
+			var index = capitalsWithCountries.indexOf(capital);
 			var capitalUrl = capitalUrls[index];
 
 			var newUrl = 'index.html' + '?capitalUrl=' + capitalUrl;
