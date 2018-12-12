@@ -15,7 +15,14 @@ function setViewMap(longDeg, longMin, longDir, latDeg, latMin, latDir) {
 	var zoom = 10;
 	var long = parseInt(longDeg, 10) + parseInt(longMin, 10)/60;
 	var lat = parseInt(latDeg, 10) + parseInt(latMin/60, 10);
-	if(longDir == 'W') long *= -1;
+	if(longDir == 'W') {
+		 long *= -1;
+		 console.log("c'est le W");
+	}
 	if(latDir == 'S') lat *= -1;
+	console.log('"'+longDir+'"');
+	console.log('"'+latDir+'"');
+	console.log(long);
+	console.log('"'+lat+'"');
 	map.setView([long, lat], zoom);
 }
