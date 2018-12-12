@@ -198,6 +198,7 @@
 					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
 							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
 							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
+							addMarqeur(name, url, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
 							return coordonnees;
 						});
 
@@ -230,54 +231,54 @@
 						
 							var lowC = elem["yearLowCDouble"];
 							if(lowC == null || lowC == undefined){ lowC = "";}
-							else{ lowC = "Mean: " + lowC.value + "°C ";}
+							else{ lowC = "Year low: " + lowC.value + "°C" + '<br/>';}
 							
 							var meanC = elem["yearMeanCDouble"];
 							if(meanC == null || meanC == undefined){ meanC = "";
 							} else{
-								meanC = meanC.value + "°C ";
+								meanC = "Year mean: "+ meanC.value + "°C " + '<br/>';
 							}
 
 							var highC = elem["yearHighCDouble"];
 							if(highC == null || highC == undefined){ highC = "";
 							} else{
-								highC = highC.value + " °C\r\n";
+								highC = "Year high: " + highC.value + " °C" + '<br/>';
 							}
 
 							var recordLowC = elem["yearRecordLowCDouble"];
 							if(recordLowC == null || recordLowC == undefined){ recordLowC = "";
 							} else{
-								recordLowC = "Record: " + recordLowC.value + "°C ";
+								recordLowC = "Record low: " + recordLowC.value + "°C" + '<br/>';
 							}
 
 							var recordHighC = elem["yearRecordHighCDouble"];
 							if(recordHighC == null || recordHighC == undefined){ recordHighC = "";
 							} else{
-								recordHighC = recordHighC.value + "°C\r\n";
+								recordHighC = "Record high: " + recordHighC.value + "°C" + '<br/>';
 							}
 							
 							var precipitationDays = elem["yearPrecipitationDaysDouble"];
 							if(precipitationDays == null || precipitationDays == undefined){ precipitationDays = "";
 							} else{
-								precipitationDays = "Rainy days: " + precipitationDays.value;
+								precipitationDays = "Rainy days: " + precipitationDays.value + '<br/>';
 							}
 							
 							var precipitationMm = elem["yearPrecipitationMmDouble"];
 							if(precipitationMm == null || precipitationMm == undefined){ precipitationMm = "";
 							} else{
-								precipitationMm = " (" + precipitationMm.value + " mm)\r\n";
+								precipitationMm = "Yearly precipitation: " + precipitationMm.value + " mm" + '<br/>';
 							}
 							
 							var snowDays = elem["yearSnowDaysDouble"];
 							if(snowDays == null || snowDays == undefined){ snowDays = "";
 							} else{
-								snowDays = "Snowy days: " + snowDays.value;
+								snowDays = "Snowy days: " + snowDays.value + '<br/>';
 							}
 
 							var snowCm = elem["yearSnowCmInteger"];
 							if(snowCm == null || snowCm == undefined){ snowCm = "";
 							} else{
-								snowCm = " (" + snowCm.value + " cm)";
+								snowCm = "Yearly snow: " + snowCm.value + " cm";
 							}
 							
 							var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
@@ -302,7 +303,7 @@
 					if (first !== undefined && first !== null) {
 						var result = format(first);
 						// console.log(result);
-						$(fieldId).text(result);
+						$(fieldId).html(result);
 					} else {
 						$(fieldId).parent().hide();
 						$(fieldId).text("UNDEFINED");
@@ -349,5 +350,7 @@
             });
         }
         setTimeout(function() { console.log("resize"); $("#map2").height(510) }, 5000);
+
+    
 	</script>
 </html>
