@@ -117,6 +117,14 @@
 								</div>
 								<div class="row">
 									<p class="col">
+										Climate Information
+									</p>
+									<p class="col" id="climate">
+									</p>
+								</div>
+
+								<div class="row">
+									<p class="col">
 										Position
 									</p>
 									<p class="col" id="position">
@@ -223,12 +231,91 @@
 					request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
 
 					request("requetes/regionRequest.rq", "#region", capital, (elem) => {return elem.regionName.value});
+					
+					request("requetes/climateRequest.rq", "#climate", capital, (elem) => {
+						
+							var lowC = elem["yearLowCDouble"];
+							if(lowC == null || lowC == undefined){ lowC = "";}
+							else{ lowC = "Mean: " + lowC.value + "°C ";}
+							
+							var meanC = elem["yearMeanCDouble"];
+							if(meanC == null || meanC == undefined){ meanC = "";
+							} else{
+								meanC = meanC.value + "°C ";
+							}
 
+							var highC = elem["yearHighCDouble"];
+							if(highC == null || highC == undefined){ highC = "";
+							} else{
+								highC = highC.value + " °C\r\n";
+							}
+
+							var recordLowC = elem["yearRecordLowCDouble"];
+							if(recordLowC == null || recordLowC == undefined){ recordLowC = "";
+							} else{
+								recordLowC = "Record: " + recordLowC.value + "°C ";
+							}
+
+							var recordHighC = elem["yearRecordHighCDouble"];
+							if(recordHighC == null || recordHighC == undefined){ recordHighC = "";
+							} else{
+								recordHighC = recordHighC.value + "°C\r\n";
+							}
+							
+							var precipitationDays = elem["yearPrecipitationDaysDouble"];
+							if(precipitationDays == null || precipitationDays == undefined){ precipitationDays = "";
+							} else{
+								precipitationDays = "Rainy days: " + precipitationDays.value;
+							}
+							
+							var precipitationMm = elem["yearPrecipitationMmDouble"];
+							if(precipitationMm == null || precipitationMm == undefined){ precipitationMm = "";
+							} else{
+								precipitationMm = " (" + precipitationMm.value + " mm)\r\n";
+							}
+							
+							var snowDays = elem["yearSnowDaysDouble"];
+							if(snowDays == null || snowDays == undefined){ snowDays = "";
+							} else{
+								snowDays = "Snowy days: " + snowDays.value;
+							}
+
+							var snowCm = elem["yearSnowCmInteger"];
+							if(snowCm == null || snowCm == undefined){ snowCm = "";
+							} else{
+								snowCm = " (" + snowCm.value + " cm)";
+							}
+							
+							var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
+							return climate;
+						});
 					$("#pays").text(countries[index]);
 
 				}
 			});
 		});
+
+		function request(filename, fieldId, capital, format) {
+			// console.log("request");
+			// console.log(filename);
+			readTextFile(filename, function(req) {
+				req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
+				// console.log(req);
+				var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
+				$.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
+					// console.log(resultatsReq);
+					var first = result = resultatsReq.results.bindings[0];
+					if (first !== undefined && first !== null) {
+						var result = format(first);
+						// console.log(result);
+						$(fieldId).text(result);
+					} else {
+						$(fieldId).parent().hide();
+						$(fieldId).text("UNDEFINED");
+					}
+				});
+			});
+		}
 
 		function computeDensity() {
 			if (surface !== undefined && surface !== null && population !== undefined && population !== null) {
