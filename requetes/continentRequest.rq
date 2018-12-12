@@ -1,5 +1,4 @@
-#A region can be a district, division, county, etc...
-select distinct ?continentString where
+SELECT DISTINCT ?continentString WHERE
 {
 	?country a dbo:Country.
         ?country dbo:flag ?flag.

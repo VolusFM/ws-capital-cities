@@ -1,4 +1,4 @@
-select distinct ?mottoString where 
+SELECT DISTINCT ?mottoString WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.

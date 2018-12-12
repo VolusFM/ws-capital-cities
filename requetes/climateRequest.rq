@@ -1,4 +1,4 @@
-select distinct ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDouble ?yearLowCDouble ?yearRecordLowCDouble ?yearPrecipitationDaysDouble ?yearPrecipitationMmDouble ?yearSunDouble where 
+SELECT DISTINCT ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDouble ?yearLowCDouble ?yearRecordLowCDouble ?yearPrecipitationDaysDouble ?yearPrecipitationMmDouble ?yearSunDouble WHERE
 {
         ?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -9,10 +9,11 @@ select distinct ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDoubl
 	}
 	
         FILTER(str(?capital) = %CAPITAL_URL%)
+	# Example URL:
 	# FILTER(str(?capital) = "http://dbpedia.org/resource/Canberra")
         # FIXME: for some reason this gives Kathmandu with correct values on an IF machine        
 
-        # Climate
+        # Climate fields
         OPTIONAL{?capital dbp:yearHighC ?yearHighC.}
 	BIND(xsd:double(?yearHighC) as ?yearHighCDouble) 
         OPTIONAL{?capital dbp:yearRecordHighC ?yearRecordHighC.}

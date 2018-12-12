@@ -1,4 +1,4 @@
-select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
+SELECT DISTINCT ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW WHERE
 {
         ?country a dbo:Country.
         ?country dbo:flag ?flag.
@@ -14,10 +14,10 @@ select distinct ?capital ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitu
         ?country dbp:latd ?latitudeDegrees.
         ?country dbp:latm ?latitudeMinutes.
         ?country dbp:latns ?latitudeNS. # North - South
-        BIND(str(?latitudeNS) as ?directionNS)
+        BIND(str(?latitudeNS) AS ?directionNS)
 
         ?country dbp:longd ?longitudeDegrees.
         ?country dbp:longm ?longitudeMinutes.
         ?country dbp:longew ?longitudeEW. # East - West
-        BIND(str(?longitudeEW) as ?directionEW)
+        BIND(str(?longitudeEW) AS ?directionEW)
 }

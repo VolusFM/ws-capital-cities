@@ -1,5 +1,5 @@
 PREFIX dboPop: <http://dbpedia.org/ontology/PopulatedPlace/>
-select distinct ?areaDouble where 
+SELECT DISTINCT ?areaDouble WHERE
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
