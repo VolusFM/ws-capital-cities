@@ -20,7 +20,12 @@ function setViewMap(longDeg, longMin, longDir, latDeg, latMin, latDir) {
 function addMarqeur(nom, url, longDeg, longMin, longDir, latDeg, latMin, latDir) {
 	var coordonnes = degresMinutesToDecimal(longDeg, longMin, longDir, latDeg, latMin, latDir);
 	var marker = L.marker(coordonnes).addTo(map);
-	marker.bindPopup('<a href="'+url+'">'+nom+'</a>').openPopup();
+
+	var pageUrl = window.location.href.split('/');
+	pageUrl.pop();
+	pageUrl = pageUrl.join('/');
+	var capitalUrl = pageUrl + '/index.html?capitalUrl=' + url;
+	marker.bindPopup('<a href="'+capitalUrl+'">'+nom+'</a>').openPopup();
 }
 
 function degresMinutesToDecimal(longDeg, longMin, longDir, latDeg, latMin, latDir) {
