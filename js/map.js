@@ -20,8 +20,8 @@ function setViewMap(longDeg, longMin, longDir, latDeg, latMin, latDir) {
 function addMarqeur(nom, url, longDeg, longMin, longDir, latDeg, latMin, latDir) {
 	var coordonnes = degresMinutesToDecimal(longDeg, longMin, longDir, latDeg, latMin, latDir);
 	var marker = L.marker(coordonnes).addTo(map);
-
-	var pageUrl = window.location.href.split('/');
+	
+	var pageUrl = window.location.href.split('?')[0].split('/');
 	pageUrl.pop();
 	pageUrl = pageUrl.join('/');
 	var capitalUrl = pageUrl + '/index.html?capitalUrl=' + url;
