@@ -21,7 +21,7 @@
 	</head>
 	<body>
 			<div class="container-fluid">
-				<div class="row navbar navbar-dark bg-dark">
+				<div class="row navbar fixed-top navbar-dark bg-dark">
 					<a class="col navbar-brand" href="accueil.html">CAPITALS SEARCH ENGINE</a>
 					<div class="col-3">
 						<div id="autocomplete" class="autocomplete">
@@ -43,6 +43,8 @@
 							<p class="row text-justify">
 								<span class="col-12" id="description" style="padding-left: 15px"></span>
 							</p>
+							<hr class="my-4">
+							<h3>Map</h3>
 							<div class="row" style="width: 100%;">
 								<div class= "col-12">
 									<div id="map" style ="height: 500px;"></div>
@@ -51,6 +53,7 @@
 						</div>
 						<div class="col-4">
 							<img class="img-thumbnail" src="" alt="Image" id="image"></img>
+							<hr class="my-4">
 							<div class="container-fluid">
 								<div class="row">
 									<p class="col">
@@ -196,8 +199,12 @@
 					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {return elem["abstractString"].value});
 
 					request("requetes/countryNameRequest.rq", "#nom-local", capital, (elem) => {
-						return elem["labelCityLocal"].value}
-					);
+						if (elem["labelCityLocal"] !== undefined) {
+							return elem["labelCityLocal"].value
+						} 
+						$("#nom-local").parent().hide();
+						return "";
+					});
 
 					request("requetes/leaderRequest.rq", "#maire", capital, (elem) => {
 							var call2 = elem["nameString"];

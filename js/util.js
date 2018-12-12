@@ -32,10 +32,10 @@ function request(filename, fieldId, capital, format) {
     // console.log(filename);
     readTextFile(filename, function(req) {
         req = req.replace('%CAPITAL_URL%', '"' + capital + '"');
-        // console.log(req);
+        console.log(req);
         var reqUrl = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(req) +'&format=json';
         $.getJSON(reqUrl+"&callback=?", function(resultatsReq) {
-            // console.log(resultatsReq);
+            console.log(resultatsReq);
             var first = result = resultatsReq.results.bindings[0];
             if (first !== undefined && first !== null) {
                 var result = format(first);
@@ -84,6 +84,7 @@ function requestImage(filename, fieldId, capital, format) {
                 // console.log(result);
                 $(fieldId).attr("src", result);
             } else {
+                $(fieldId).hide();
                 $(fieldId).attr("alt", "Pas d'image trouvée");
             }
         });
