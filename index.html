@@ -41,7 +41,6 @@
 					<div class="row">
 						<div class="col-8">
 							<p class="text-justify">
-								<img class="rounded float-left" src="images/blason.svg" style="width: 250px; margin-right: 20px;" alt="blason"/>
 								<span id="description"></span>
 							</p>
 						</div>
@@ -67,7 +66,6 @@
 										Continent
 									</p>
 									<p class="col" id="continent">
-										Europe
 									</p>
 								</div>
 								<div class="row">
@@ -104,7 +102,6 @@
 										Density
 									</p>
 									<p class="col" id="densite">
-										UNDEFINED
 									</p>
 								</div>
 								<div class="row">
@@ -112,30 +109,6 @@
 										Surface area
 									</p>
 									<p class="col" id="superficie">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Altitude
-									</p>
-									<p class="col" id="altitude">
-										100 m
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Altitude minimum
-									</p>
-									<p class="col" id="altitude-min">
-										80 m
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Altitude maximum
-									</p>
-									<p class="col" id="altitude-max">
-										150 m
 									</p>
 								</div>
 								<div class="row">
@@ -177,18 +150,21 @@
 		initialiseMap('map');
 
 		var capitals = [];
+		var capitalsWithCountries = [];
 		var capitalUrls = [];
 		var population;
 		var surface;
+		$("#densite").parent().hide();
 
 		readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
 			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
 			$.getJSON(url+"&callback=?", function(resultats) {
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
+					capitalsWithCountries.push(element.capitalName.value + " (" + element.CountryName.value + ")");
 					capitalUrls.push(element.capital.value);
 				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
 
 				var capital = getUrlParameter('capitalUrl');
 				var index = capitalUrls.indexOf(capital);
@@ -241,7 +217,9 @@
 
 					requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
 
-					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value})
+					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value});
+
+					request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
 
 				}
 			});
@@ -262,6 +240,7 @@
 						// console.log(result);
 						$(fieldId).text(result);
 					} else {
+						$(fieldId).parent().hide();
 						$(fieldId).text("UNDEFINED");
 					}
 				});
@@ -315,6 +294,7 @@
 				var density = population / surface;
 				var formatted = numberWithCommas(parseFloat(density).toFixed(2)) + " hab./km²";
 				$("#densite").text(formatted);
+				$("#densite").parent().show();
 			}
 		}
 
@@ -323,7 +303,7 @@
 		function rechercher() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
-			var index = capitals.indexOf(capital);
+			var index = capitalsWithCountries.indexOf(capital);
 			var capitalUrl = capitalUrls[index];
 
 			var newUrl = url + '?capitalUrl=' + capitalUrl;
