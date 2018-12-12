@@ -1,0 +1,33 @@
+select distinct ?capital ?capitalName ?latitudeDegrees ?latitudeMinutes ?directionNS ?longitudeDegrees ?longitudeMinutes ?directionEW where 
+{
+	?country a dbo:Country.
+	?country dbo:flag ?flag.
+        ?capital rdfs:label ?capitalName
+	{
+		{?country dbo:capital ?capital}
+		UNION
+		{?country dbp:capital ?capital}
+	}
+
+	?country <http://purl.org/linguistics/gold/hypernym> ?type.
+
+	# Ensure it's the actual capital of an actual country
+	FILTER (?type = dbr:State || ?type = dbr:Country || ?type = dbr:Republic || ?type = dbr:Kingdom || 
+	?type = dbr:Democracy || ?type = dbr:Enclave || ?type = dbr:Microstate || ?type = dbr:Monarchy || ?type = dbr:Nation || ?type = dbr:United)
+	FILTER (lang(?capitalName) = 'en') 
+	FILTER NOT EXISTS {?country dbo:dissolutionYear ?year}
+	FILTER NOT EXISTS {?country dbo:dissolutionDate ?date}
+	FILTER NOT EXISTS {?capital a dbo:Person}
+
+	# GPS Coordinates
+        ?country dbp:latd ?latitudeDegrees.
+        ?country dbp:latm ?latitudeMinutes.
+        ?country dbp:latns ?latitudeNS. # North - South
+        BIND(str(?latitudeNS) as ?directionNS)
+
+        ?country dbp:longd ?longitudeDegrees.
+        ?country dbp:longm ?longitudeMinutes.
+        ?country dbp:longew ?longitudeEW. # East - West
+        BIND(str(?longitudeEW) as ?directionEW)
+}
+order by ?capital
