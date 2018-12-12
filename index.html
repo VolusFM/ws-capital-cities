@@ -218,7 +218,7 @@
 							return coordonnees;
 						});
 
-					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {return elem["callret-1"].value});
+					request("requetes/abstractRequest.rq", "#description", capital, (elem) => {return elem["abstractString"].value});
 
 					request("requetes/countryNameRequest.rq", "#pays", capital, (elem) => {
 						return elem["labelState"].value}
