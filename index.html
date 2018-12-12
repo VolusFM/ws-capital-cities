@@ -39,7 +39,6 @@
 					<div class="row">
 						<div class="col-8">
 							<p class="text-justify">
-								<img class="rounded float-left" src="images/blason.svg" style="width: 250px; margin-right: 20px;" alt="blason"/>
 								<span id="description"></span>
 							</p>
 						</div>
@@ -65,7 +64,6 @@
 										Continent
 									</p>
 									<p class="col" id="continent">
-										Europe
 									</p>
 								</div>
 								<div class="row">
@@ -177,6 +175,7 @@
 
 	<script type="text/javascript">
 		var capitals = [];
+		var capitalsWithCountries = [];
 		var capitalUrls = [];
 		var population;
 		var surface;
@@ -186,9 +185,10 @@
 			$.getJSON(url+"&callback=?", function(resultats) {
 				resultats.results.bindings.forEach(function(element) {
 					capitals.push(element.capitalName.value);
+					capitalsWithCountries.push(element.capitalName.value + " (" + element.CountryName.value + ")");
 					capitalUrls.push(element.capital.value);
 				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitals, rechercher);
+				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
 
 				var capital = getUrlParameter('capitalUrl');
 				var index = capitalUrls.indexOf(capital);
@@ -241,7 +241,9 @@
 
 					requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
 
-					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value})
+					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value});
+
+					request("requetes/continent.rq", "#continent", capital, (elem) => {return elem.continentLabel.value});
 
 				}
 			});
@@ -323,7 +325,7 @@
 		function rechercher() {
 			var url = window.location.href.split('?')[0];
 			var capital = $('#recherche').val();
-			var index = capitals.indexOf(capital);
+			var index = capitalsWithCountries.indexOf(capital);
 			var capitalUrl = capitalUrls[index];
 
 			var newUrl = url + '?capitalUrl=' + capitalUrl;
