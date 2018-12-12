@@ -198,6 +198,7 @@
 					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
 							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
 							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
+							addMarqeur(name, url, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
 							return coordonnees;
 						});
 
@@ -349,5 +350,7 @@
             });
         }
         setTimeout(function() { console.log("resize"); $("#map2").height(510) }, 5000);
+
+    
 	</script>
 </html>
