@@ -65,6 +65,7 @@ function requestLink(filename, fieldId, capital, format) {
                 $(fieldId).attr("href", result);
                 $(fieldId).text(result);
             } else {
+                $(fieldId).parent().parent().hide();
                 $(fieldId).text("UNDEFINED");
             }
         });
@@ -85,7 +86,7 @@ function requestImage(filename, fieldId, capital, format) {
                 // console.log(result);
                 $(fieldId).attr("src", result);
             } else {
-                $(fieldId).attr("alt", "UNDEFINED");
+                $(fieldId).attr("alt", "Pas d'image trouvée");
             }
         });
     });
