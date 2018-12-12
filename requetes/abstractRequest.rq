@@ -1,4 +1,4 @@
-select distinct str(?abstract) where 
+select distinct ?abstractString where 
 {
 	?country a dbo:Country.
 	?country dbo:flag ?flag.
@@ -14,4 +14,6 @@ select distinct str(?abstract) where
 	FILTER(lang(?abstract) = 'en')
 
 	?capital dbo:abstract ?abstract.
+
+        BIND(str(?abstract) AS ?abstractString)
 }
