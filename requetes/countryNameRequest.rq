@@ -7,16 +7,21 @@ select distinct ?capital ?labelState ?labelCity ?labelCityLocal where
 	}
 	?country a dbo:Country.
 
-	?country dbo:language ?lang.
-	?lang dbo:iso6391Code ?code.
-
 	?country rdfs:label ?labelState. 
 	?capital rdfs:label ?labelCity. 
-	?capital rdfs:label ?labelCityLocal. 
+
+	?country dbo:language ?lang.
+	# This needs to be optional as not every language has a code
+	OPTIONAL
+	{
+		?lang dbo:iso6391Code ?code.
+		?capital rdfs:label ?labelCityLocal.
+		FILTER(lang(?labelCityLocal) = ?code)
+	}
         
+	# Example URL
+	# FILTER(contains(str(?capital), "http://dbpedia.org/resource/Paris"))
 	FILTER(contains(str(?capital), %CAPITAL_URL%))
 	FILTER(lang(?labelState) = 'en')
 	FILTER(lang(?labelCity) = 'en')
-	FILTER(lang(?labelCityLocal) = ?code)
-}
-LIMIT 1
+} LIMIT 1
