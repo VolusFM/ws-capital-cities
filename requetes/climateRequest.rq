@@ -41,3 +41,4 @@ SELECT DISTINCT ?capital ?yearHighCDouble ?yearRecordHighCDouble ?yearMeanCDoubl
 		OPTIONAL{?capital dbp:yearSnowCm ?yearSnowCm.}
 		BIND(xsd:integer(?yearSnowCm) as ?yearSnowCmInteger) 
 }
+LIMIT 1

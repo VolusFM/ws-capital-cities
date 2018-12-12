@@ -37,7 +37,7 @@ function request(filename, fieldId, capital, format) {
             var first = result = resultatsReq.results.bindings[0];
             if (first !== undefined && first !== null) {
                 var result = format(first);
-                $(fieldId).text(result);
+                $(fieldId).html(result);
             } else {
                 $(fieldId).parent().hide();
                 $(fieldId).text("UNDEFINED");
