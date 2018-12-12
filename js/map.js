@@ -25,7 +25,7 @@ function addMarqeur(nom, url, longDeg, longMin, longDir, latDeg, latMin, latDir)
 	pageUrl.pop();
 	pageUrl = pageUrl.join('/');
 	var capitalUrl = pageUrl + '/index.html?capitalUrl=' + url;
-	marker.bindPopup('<a href="'+capitalUrl+'">'+nom+'</a>').openPopup();
+	marker.bindPopup('<a href="'+capitalUrl+'">'+nom+'</a>');
 }
 
 function degresMinutesToDecimal(longDeg, longMin, longDir, latDeg, latMin, latDir) {

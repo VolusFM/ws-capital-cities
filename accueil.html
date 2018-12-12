@@ -46,11 +46,28 @@
 				</div>
 			</div>
 			<div id="acteur"></div>
+			<div id="flomut"></div>
 	</body>
 	
 	<script type="text/javascript">
 		initialiseMap('map');
 		addMarqeur('London','http://dbpedia.org/resource/London',0,0,'W',51,28,'N');
+		readTextFile("requetes/allCapitalCitiesCoordinatesRequest.rq", function(query) {
+			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
+			$.getJSON(url+"&callback=?", function(resultats) {
+				resultats.results.bindings.forEach(function(element) {
+					var nom  = element.capital.value;
+					var url = element.capital.value;
+					var latDeg = element.latitudeDegrees.value;
+					var latMin = element.latitudeMinutes.value;
+					var latDir = element.directionNS.value;
+					var longDeg = element.longitudeDegrees.value;
+					var longMin = element.longitudeMinutes.value;
+					var longDir = element.directionEW.value;
+					addMarqeur(nom, url, longDeg, longMin, longDir, latDeg, latMin, latDir);
+				})
+			});
+		});
 
 		var capitals = [];
 		var capitalUrls = [];
