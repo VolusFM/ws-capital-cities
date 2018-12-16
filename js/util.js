@@ -1,8 +1,8 @@
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+    sURLVariables = sPageURL.split('&'),
+    sParameterName,
+    i;
 
     for (i = 0; i < sURLVariables.length; i++) {
         sParameterName = sURLVariables[i].split('=');
@@ -10,6 +10,28 @@ var getUrlParameter = function getUrlParameter(sParam) {
         if (sParameterName[0] === sParam) {
             return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
         }
+    }
+};
+
+function rechercher(capitalsWithCountries, capitals, countries, capitalUrls) {
+    var capital = $('#recherche').val();
+    var index = capitalsWithCountries.indexOf(capital);
+    if (index < 0) {
+        index = capitals.indexOf(capital);
+    }
+    if (index < 0) {
+        index = countries.indexOf(capital);
+    }
+
+    if (index < 0) {
+        var newUrl = './search.html?search=' + capital;
+        window.location = newUrl;
+    } else {
+
+        var capitalUrl = capitalUrls[index];
+
+        var newUrl = './capital.html?capitalUrl=' + capitalUrl;
+        window.location = newUrl;
     }
 };
 

@@ -1,342 +1,334 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>CAPITALS SEARCH ENGINE</title>
+<head>
+	<title>CAPITALS SEARCH ENGINE</title>
 
-		<!-- Nos feuilles de style -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+	<!-- Nos feuilles de style -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
 
-		<!-- Nos srcipts js-->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<meta charset="UTF-8">
-		<link rel="icon" href="images/logo.jpg" />
-		<link rel="stylesheet" href="css/style.css" />
-		<script src="js/autocomplete.js"></script>
-		<script src="js/util.js"></script>
-		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-		<script src="js/map.js"></script>
+	<!-- Nos srcipts js-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<link rel="icon" href="images/logo.jpg" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="js/autocomplete.js"></script>
+	<script src="js/util.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="js/map.js"></script>
 
-	</head>
-	<body>
-			<div class="container-fluid">
-				<div class="row navbar fixed-top navbar-dark bg-dark">
-					<a class="col navbar-brand" href="index.html">CAPITALS SEARCH ENGINE</a>
-					<div class="col-3">
-						<div id="autocomplete" class="autocomplete">
-							<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="City or country name" value="" />
-						</div>
-					</div>
-					<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
-					<p>&nbsp;</p>
-					<button id="bouton_random" class="col-1 btn btn-warning" type="submit"><i class="fas fa-dice"></i></button>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row navbar fixed-top navbar-dark bg-dark">
+			<a class="col navbar-brand" href="index.html">CAPITALS SEARCH ENGINE</a>
+			<div class="col-3">
+				<div id="autocomplete" class="autocomplete">
+					<input id="recherche" class="form-control mdb-autocomplete" type="text" placeholder="City or country name" value="" />
 				</div>
-				<div class="row">
+			</div>
+			<button id="bouton_recherche" class="col-1 btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+			<p>&nbsp;</p>
+			<button id="bouton_random" class="col-1 btn btn-warning" type="submit"><i class="fas fa-dice"></i></button>
+		</div>
+		<div class="row">
+		</div>
+		<div class="row jumbotron">
+			<h2 class="col display-1" style="text-align: center;" id="nom"></h2>
+		</div>
+		<div class="row container-fluid">
+			<div class="col-8">
+				<div>
+					<h3>Abstract</h3>
+					<p class="col-12 text-justify" id="description" style="padding-left: 15px">
+					</p>
+					<hr class="my-4">
 				</div>
-				<div class="row jumbotron">
-					<h2 class="col display-1" style="text-align: center;" id="nom"></h2>
-				</div>
-				<div class="row container-fluid">
-						<div class="col-8">
-							<div>
-								<h3>Abstract</h3>
-								<p class="col-12 text-justify" id="description" style="padding-left: 15px">
-								</p>
-								<hr class="my-4">
-							</div>
-							<h3>Map</h3>
-							<div class="row" style="width: 100%;">
-								<div class= "col-12">
-									<div id="map" style ="height: 500px;"></div>
-								</div>
-							</div>
-						</div>
-						<div class="col-4">
-							<div>
-								<img class="img-thumbnail" src="" alt="Image" id="image"></img>
-								<hr class="my-4">
-							</div>
-							<div class="container-fluid">
-								<div class="row">
-									<p class="col">
-										Local name
-									</p>
-									<p class="col" id="nom-local">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Country
-									</p>
-									<p class="col" id="pays">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Continent
-									</p>
-									<p class="col" id="continent">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Region
-									</p>
-									<p class="col" id="region">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Demonym
-									</p>
-									<p class="col" id="gentille">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Mayor
-									</p>
-									<p class="col" id="maire">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Population
-									</p>
-									<p class="col" id="population">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Surface area
-									</p>
-									<p class="col" id="superficie">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Density
-									</p>
-									<p class="col" id="densite">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Climate Information
-									</p>
-									<p class="col" id="climate">
-									</p>
-								</div>
-
-								<div class="row">
-									<p class="col">
-										Position
-									</p>
-									<p class="col" id="position">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-										Motto
-									</p>
-									<p class="col" id="devise">
-									</p>
-								</div>
-								<div class="row">
-									<p class="col">
-									</p>
-									<p class="col">
-										<a target="_blank" rel="noopener noreferrer" id="pageWeb"><img border="0" src="images/www.png" width="50" height="50"></a>
-									</p>
-								</div>
-							</div>
-						</div>
+				<h3>Map</h3>
+				<div class="row" style="width: 100%;">
+					<div class= "col-12">
+						<div id="map" style ="height: 500px;"></div>
 					</div>
 				</div>
 			</div>
-	</body>
+			<div class="col-4">
+				<div>
+					<img class="img-thumbnail" src="" alt="Image" id="image"></img>
+					<hr class="my-4">
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<p class="col">
+							Local name
+						</p>
+						<p class="col" id="nom-local">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Country
+						</p>
+						<p class="col" id="pays">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Continent
+						</p>
+						<p class="col" id="continent">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Region
+						</p>
+						<p class="col" id="region">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Demonym
+						</p>
+						<p class="col" id="gentille">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Mayor
+						</p>
+						<p class="col" id="maire">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Population
+						</p>
+						<p class="col" id="population">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Surface area
+						</p>
+						<p class="col" id="superficie">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Density
+						</p>
+						<p class="col" id="densite">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Climate Information
+						</p>
+						<p class="col" id="climate">
+						</p>
+					</div>
 
-	<script type="text/javascript">
-		initialiseMap('map');
+					<div class="row">
+						<p class="col">
+							Position
+						</p>
+						<p class="col" id="position">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+							Motto
+						</p>
+						<p class="col" id="devise">
+						</p>
+					</div>
+					<div class="row">
+						<p class="col">
+						</p>
+						<p class="col">
+							<a target="_blank" rel="noopener noreferrer" id="pageWeb"><img border="0" src="images/www.png" width="50" height="50"></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 
-		var capitals = [];
-		var capitalsWithCountries = [];
-		var countries = [];
-		var capitalUrls = [];
-		var population;
-		var surface;
-		$("#densite").parent().hide();
+<script type="text/javascript">
+	initialiseMap('map');
 
-		readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
-			var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
-			$.getJSON(url+"&callback=?", function(resultats) {
-				resultats.results.bindings.forEach(function(element) {
-					capitals.push(element.capitalName.value);
-					capitalsWithCountries.push(element.capitalName.value + " (" + element.countryName.value + ")");
-					countries.push(element.countryName.value);
-					capitalUrls.push(element.capital.value);
-				});
-				autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rechercher);
+	var capitals = [];
+	var capitalsWithCountries = [];
+	var countries = [];
+	var capitalUrls = [];
+	var population;
+	var surface;
+	$("#densite").parent().hide();
 
-				var capital = getUrlParameter('capitalUrl');
-				var index = capitalUrls.indexOf(capital);
-
-				if (capital !== undefined && capital !== null && index >= 0) {
-					var name = capitals[index];
-					$("#nom").text(name);
-
-					request("requetes/populationTotalRequest.rq", "#population", capital, (elem) => { 
-							population = elem["popTotalInt"].value;
-							computeDensity();
-							return numberWithCommas(population) + " hab.";
-						});
-
-					request("requetes/popDemonymRequest.rq", "#gentille", capital, (elem) => {return capitalizeFirstLetter(elem["popDemonymString"].value);});
-
-					request("requetes/totalAreaRequest.rq", "#superficie", capital, (elem) => {
-							surface = elem["areaDouble"].value;
-							computeDensity();
-							return numberWithCommas(surface) + " km²";
-						});
-
-					request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
-							var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
-							setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
-							addMarqeur(name, capital, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
-							return coordonnees;
-						});
-
-					requestSpotlight("requetes/abstractRequest.rq", "#description", capital, (elem) => {
-						var abstract = elem["abstractString"].value;
-						return abstract;
-					});
-
-					request("requetes/countryNameRequest.rq", "#nom-local", capital, (elem) => {
-						if (elem["labelCityLocal"] !== undefined) {
-							return elem["labelCityLocal"].value
-						} 
-						$("#nom-local").parent().hide();
-						return "";
-					});
-
-					request("requetes/leaderRequest.rq", "#maire", capital, (elem) => {
-							var call2 = elem["nameString"];
-							if (call2 !== undefined && call2 !== null) {
-								return call2.value;
-							} else {
-								return elem["leaderNameString"].value;
-							}
-						});
-
-					request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["mottoString"].value});
-
-					requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
-
-					requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value});
-
-					request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
-
-					request("requetes/regionRequest.rq", "#region", capital, (elem) => {return elem.regionName.value});
-					
-					request("requetes/climateRequest.rq", "#climate", capital, (elem) => {
-						
-														var lowC = elem["yearLowCDouble"];
-							if(lowC == null || lowC == undefined){ lowC = "";}
-							else{ lowC = "Year low: " + lowC.value + "°C" + '<br/>';}
-							
-							var meanC = elem["yearMeanCDouble"];
-							if(meanC == null || meanC == undefined){ meanC = "";
-							} else{
-								meanC = "Year mean: "+ meanC.value + "°C " + '<br/>';
-							}
-							var highC = elem["yearHighCDouble"];
-							if(highC == null || highC == undefined){ highC = "";
-							} else{
-								highC = "Year high: " + highC.value + " °C" + '<br/>';
-							}
-							var recordLowC = elem["yearRecordLowCDouble"];
-							if(recordLowC == null || recordLowC == undefined){ recordLowC = "";
-							} else{
-								recordLowC = "Record low: " + recordLowC.value + "°C" + '<br/>';
-							}
-							var recordHighC = elem["yearRecordHighCDouble"];
-							if(recordHighC == null || recordHighC == undefined){ recordHighC = "";
-							} else{
-								recordHighC = "Record high: " + recordHighC.value + "°C" + '<br/>';
-							}
-							
-							var precipitationDays = elem["yearPrecipitationDaysDouble"];
-							if(precipitationDays == null || precipitationDays == undefined){ precipitationDays = "";
-							} else{
-								precipitationDays = "Rainy days: " + precipitationDays.value + '<br/>';
-							}
-							
-							var precipitationMm = elem["yearPrecipitationMmDouble"];
-							if(precipitationMm == null || precipitationMm == undefined){ precipitationMm = "";
-							} else{
-								precipitationMm = "Yearly precipitation: " + precipitationMm.value + " mm" + '<br/>';
-							}
-							
-							var snowDays = elem["yearSnowDaysDouble"];
-							if(snowDays == null || snowDays == undefined){ snowDays = "";
-							} else{
-								snowDays = "Snowy days: " + snowDays.value + '<br/>';
-							}
-							var snowCm = elem["yearSnowCmInteger"];
-							if(snowCm == null || snowCm == undefined){ snowCm = "";
-							} else{
-								snowCm = "Yearly snow: " + snowCm.value + " cm";
-							}
-							
-							var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
-							if (climate === "") {
-								$("#climate").parent().hide();
-							}
-							return climate;
-						});
-					$("#pays").text(countries[index]);
-
-				}
+	readTextFile("requetes/capitalCitiesRequest.rq", function(query) {
+		var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query='+ encodeURIComponent(query) +'&format=json';
+		$.getJSON(url+"&callback=?", function(resultats) {
+			resultats.results.bindings.forEach(function(element) {
+				capitals.push(element.capitalName.value);
+				capitalsWithCountries.push(element.capitalName.value + " (" + element.countryName.value + ")");
+				countries.push(element.countryName.value);
+				capitalUrls.push(element.capital.value);
 			});
-		});
 
-		function computeDensity() {
-			if (surface !== undefined && surface !== null && population !== undefined && population !== null) {
-				var density = population / surface;
-				var formatted = numberWithCommas(parseFloat(density).toFixed(2)) + " hab./km²";
-				$("#densite").text(formatted);
-				$("#densite").parent().show();
+      let rech = () => rechercher(capitalsWithCountries, capitals, countries, capitalUrls);
+
+			$('#bouton_recherche').click(rech);
+			autocomplete(document.getElementById('recherche'), document.getElementById("autocomplete"), capitalsWithCountries, rech);
+
+			var capital = getUrlParameter('capitalUrl');
+			var index = capitalUrls.indexOf(capital);
+
+			if (capital !== undefined && capital !== null && index >= 0) {
+				var name = capitals[index];
+				$("#nom").text(name);
+
+				request("requetes/populationTotalRequest.rq", "#population", capital, (elem) => { 
+					population = elem["popTotalInt"].value;
+					computeDensity();
+					return numberWithCommas(population) + " hab.";
+				});
+
+				request("requetes/popDemonymRequest.rq", "#gentille", capital, (elem) => {return capitalizeFirstLetter(elem["popDemonymString"].value);});
+
+				request("requetes/totalAreaRequest.rq", "#superficie", capital, (elem) => {
+					surface = elem["areaDouble"].value;
+					computeDensity();
+					return numberWithCommas(surface) + " km²";
+				});
+
+				request("requetes/coordinatesRequest.rq", "#position", capital, (elem) => {
+					var coordonnees = elem.latitudeDegrees.value + "°" + elem.latitudeMinutes.value + "'" + elem.directionNS.value + " " + elem.longitudeDegrees.value + "°" + elem.longitudeMinutes.value + "'" + elem.directionEW.value;
+					setViewMap(elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
+					addMarqeur(name, capital, elem.longitudeDegrees.value, elem.longitudeMinutes.value, elem.directionEW.value, elem.latitudeDegrees.value, elem.latitudeMinutes.value, elem.directionNS.value);
+					return coordonnees;
+				});
+
+				requestSpotlight("requetes/abstractRequest.rq", "#description", capital, (elem) => {
+					var abstract = elem["abstractString"].value;
+					return abstract;
+				});
+
+				request("requetes/countryNameRequest.rq", "#nom-local", capital, (elem) => {
+					if (elem["labelCityLocal"] !== undefined) {
+						return elem["labelCityLocal"].value
+					} 
+					$("#nom-local").parent().hide();
+					return "";
+				});
+
+				request("requetes/leaderRequest.rq", "#maire", capital, (elem) => {
+					var call2 = elem["nameString"];
+					if (call2 !== undefined && call2 !== null) {
+						return call2.value;
+					} else {
+						return elem["leaderNameString"].value;
+					}
+				});
+
+				request("requetes/mottoRequest.rq", "#devise", capital, (elem) => {return elem["mottoString"].value});
+
+				requestImage("requetes/imageRequest.rq", "#image", capital, (elem) => {return elem["image"].value});
+
+				requestLink("requetes/pageRequest.rq", "#pageWeb", capital, (elem) => {return elem["page"].value});
+
+				request("requetes/continentRequest.rq", "#continent", capital, (elem) => {return elem.continentString.value});
+
+				request("requetes/regionRequest.rq", "#region", capital, (elem) => {return elem.regionName.value});
+
+				request("requetes/climateRequest.rq", "#climate", capital, (elem) => {
+
+					var lowC = elem["yearLowCDouble"];
+					if(lowC == null || lowC == undefined){ lowC = "";}
+					else{ lowC = "Year low: " + lowC.value + "°C" + '<br/>';}
+
+					var meanC = elem["yearMeanCDouble"];
+					if(meanC == null || meanC == undefined){ meanC = "";
+				} else{
+					meanC = "Year mean: "+ meanC.value + "°C " + '<br/>';
+				}
+				var highC = elem["yearHighCDouble"];
+				if(highC == null || highC == undefined){ highC = "";
+			} else{
+				highC = "Year high: " + highC.value + " °C" + '<br/>';
 			}
+			var recordLowC = elem["yearRecordLowCDouble"];
+			if(recordLowC == null || recordLowC == undefined){ recordLowC = "";
+		} else{
+			recordLowC = "Record low: " + recordLowC.value + "°C" + '<br/>';
 		}
+		var recordHighC = elem["yearRecordHighCDouble"];
+		if(recordHighC == null || recordHighC == undefined){ recordHighC = "";
+	} else{
+		recordHighC = "Record high: " + recordHighC.value + "°C" + '<br/>';
+	}
 
-		$('#bouton_recherche').click(rechercher);
+	var precipitationDays = elem["yearPrecipitationDaysDouble"];
+	if(precipitationDays == null || precipitationDays == undefined){ precipitationDays = "";
+} else{
+	precipitationDays = "Rainy days: " + precipitationDays.value + '<br/>';
+}
 
-		function rechercher() {
-			var url = window.location.href.split('?')[0];
-			var capital = $('#recherche').val();
-			var index = capitalsWithCountries.indexOf(capital);
-			var capitalUrl = capitalUrls[index];
+var precipitationMm = elem["yearPrecipitationMmDouble"];
+if(precipitationMm == null || precipitationMm == undefined){ precipitationMm = "";
+} else{
+	precipitationMm = "Yearly precipitation: " + precipitationMm.value + " mm" + '<br/>';
+}
 
-			var newUrl = url + '?capitalUrl=' + capitalUrl;
+var snowDays = elem["yearSnowDaysDouble"];
+if(snowDays == null || snowDays == undefined){ snowDays = "";
+} else{
+	snowDays = "Snowy days: " + snowDays.value + '<br/>';
+}
+var snowCm = elem["yearSnowCmInteger"];
+if(snowCm == null || snowCm == undefined){ snowCm = "";
+} else{
+	snowCm = "Yearly snow: " + snowCm.value + " cm";
+}
+
+var climate = lowC + meanC + highC + recordLowC + recordHighC + precipitationDays + precipitationMm + snowDays + snowCm;
+if (climate === "") {
+	$("#climate").parent().hide();
+}
+return climate;
+});
+				$("#pays").text(countries[index]);
+
+			}
+		});
+});
+
+function computeDensity() {
+	if (surface !== undefined && surface !== null && population !== undefined && population !== null) {
+		var density = population / surface;
+		var formatted = numberWithCommas(parseFloat(density).toFixed(2)) + " hab./km²";
+		$("#densite").text(formatted);
+		$("#densite").parent().show();
+	}
+}
+
+$('#bouton_random').click(randomCapital);
+
+function randomCapital() {
+	readTextFile("requetes/capitalCitiesRequest.rq", function (query) {
+		var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=' + encodeURIComponent(query) + '&format=json';
+		$.getJSON(url + "&callback=?", function (resultats) {
+			resultats.results.bindings.forEach(function (element) {
+				capitalUrls.push(element.capital.value);
+			});
+			var random_capital = capitalUrls[Math.floor(Math.random()*capitalUrls.length)];
+			console.log(random_capital);
+			var newUrl = 'capital.html' + '?capitalUrl=' + random_capital;
 			window.location = newUrl;
-		};
-
-		$('#bouton_random').click(randomCapital);
-
-		function randomCapital() {
-            readTextFile("requetes/capitalCitiesRequest.rq", function (query) {
-                var url = 'http://dbpedia.org/sparql/?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=' + encodeURIComponent(query) + '&format=json';
-                $.getJSON(url + "&callback=?", function (resultats) {
-                    resultats.results.bindings.forEach(function (element) {
-                        capitalUrls.push(element.capital.value);
-                    });
-					var random_capital = capitalUrls[Math.floor(Math.random()*capitalUrls.length)];
-					console.log(random_capital);
-                    var newUrl = 'capital.html' + '?capitalUrl=' + random_capital;
-					window.location = newUrl;
-                });
-            });
-        }
-	</script>
+		});
+	});
+}
+</script>
 </html>
